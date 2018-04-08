@@ -1,8 +1,24 @@
 #include "Ikan.hpp"
 
-Ikan::Ikan(double x, double y, double arah, double kecepatan) : BendaAkuarium(x, y, arah, kecepatan), tahankenyang(5), hunger(10) {
+int Ikan::banyakikan = 0;
+
+Ikan::Ikan(double x, double y, double arah, double kecepatan) : BendaAkuarium(x, y, arah, kecepatan), tahankenyang(5), hunger(10), pointtujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT) {
 	lapar = false;
 	waktumakan = 0;
+	banyakikan++;
+	image = "ikankiri.png";
+}
+
+Ikan::Ikan(const Ikan& other) : BendaAkuarium(other.getX(), other.getY(), other.getArah(), other.getKecepatan()), tahankenyang(5), hunger(10) {
+	this->lapar = other.getLapar();
+	this->waktumakan = other.getWaktuMakan();
+}
+
+Ikan& Ikan::operator=(const Ikan& other) {
+	this->setX(other.getX());
+	this->setY(other.getY());
+	this->setArah(other.getArah());
+	this->setKecepatan(other.getKecepatan());
 }
 
 //cctor
@@ -97,7 +113,9 @@ void Ikan::gerak() {
     }
 }
 
-
+int Ikan::getBanyakIkan() {
+	return banyakikan;
+}
 
 //virtual method untuk ikan makan
 // void Ikan::makan();
