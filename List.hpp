@@ -38,10 +38,11 @@ public :
 	void add(const T&); // menambah elemen ke akhir List
 	void addFirst(const T&); // menambah elemen ke awal List
 	void remove(const T&); // menghapus satu elemen dengan nilai tertentu
+	void removeIdx(int idx);
 	T delFirst(); // menghapus element pertama dan mengembalikkan nilainya
 	T delLast(); // menghapus elemen terakhir dan mengembalikkan nilainya
 	T get(int idx) const; // ambil nilai di indeks idx (asumsi idx benar)
-	T getRef(int idx) const;
+	T& getRef(int idx) const;
 private :
 	Node<T> *node; // node yang ada
 };
@@ -173,10 +174,29 @@ void List<T>::remove(const T& tval){
 		delete temp;
 		return;
 	}
-	while(temp->getNext()!=NULL&&temp->getNext()->getVal() != tval){
+	while(temp->getNext()!=NULL&& !(temp->getNext()->getVal() == tval)){
 		temp = temp->getNext();
 	}
 	if(temp->getNext() !=NULL){
+		Node<T> *del = temp->getNext();
+		temp->setNext(del->getNext());
+		delete del;
+	}
+}
+
+template<class T>
+void List<T>::removeIdx(int idx){
+	Node<T> *temp = node, *prev = NULL;
+	if(idx==0){
+		node = node->getNext();
+		delete temp;
+		return;
+	}
+	while(temp->getNext() != NULL&& idx>1){
+		temp = temp->getNext();
+		idx--;
+	}
+	if(temp->getNext() != NULL){
 		Node<T> *del = temp->getNext();
 		temp->setNext(del->getNext());
 		delete del;
@@ -222,7 +242,7 @@ T List<T>::get(int idx) const{
 }
 
 template<class T>
-T& List<T>getRef(int idx) const{
+T& List<T>::getRef(int idx) const{
 	Node<T> *temp = node;
 	while(idx>0){
 		temp = temp->getNext();
