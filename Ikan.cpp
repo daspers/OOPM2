@@ -112,7 +112,6 @@ void Ikan::gerak() {
 void Ikan::cariMakan(List<MakananIkan>& listmakananikan) {
 	Posisi now(this->getX(), this->getY());
 	int terdekat = listmakananikan.cariIndeksTerdekat(now);
-	
 }
 
 int Ikan::getBanyakIkan() {

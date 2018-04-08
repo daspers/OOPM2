@@ -21,7 +21,11 @@ class MakananIkan : public BendaAkuarium {
   public :
     //Ctor
     MakananIkan(int x);
-    
+    MakananIkan();
+
+    //Dtor
+    ~MakananIkan();
+
     void gerak(); //Update attribut ketika makanan ikan bergerak
 
     void setImage(string x);

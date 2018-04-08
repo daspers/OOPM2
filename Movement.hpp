@@ -11,8 +11,10 @@ class Movement {
 	//Ctor
     Movement(); //Menginisiasi nilai arah = 0 dan kecepatan = 0
     Movement(double, double); //Menginisiasi nilai arah = x, dan kecepatan = y
+    
     //Cctor    
     Movement(const Movement&); 
+    
     //Dtor
     ~Movement();
     

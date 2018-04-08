@@ -7,6 +7,8 @@
 #include <set>
 #include <string>
 
+#define PI 3.14159265
+
 // Pengaturan ukuran layar yang dihasilkan.
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -67,5 +69,7 @@ const std::set<SDL_Keycode>& get_tapped_keys();
 
 // Mengembalikan waktu dari permulaan program dalam nilai detik (bisa pecahan).
 double time_since_start();
+
+
 
 #endif

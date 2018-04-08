@@ -2,16 +2,22 @@
 
 int MakananIkan::banyakmakananikan = 0;
 
+MakananIkan::MakananIkan() : BendaAkuarium(0, 0, 0, 500) {
+	MakananIkan::banyakmakananikan++;
+}
+
 //Ctor
 MakananIkan::MakananIkan(int x) : BendaAkuarium(x, 0, 0, 500) {
 	MakananIkan::banyakmakananikan++;
 	image = "makananikan";
 }
 
+MakananIkan::~MakananIkan() {
+}
 
 void MakananIkan::gerak(){ //Update attribut ketika makanan ikan bergerak
 	if(abs(this->getY() - SCREEN_HEIGHT) > 0.1){
-		this->setY(this->getY() + 5);
+		this->setY(this->getY() + 0.5);
 	}
 }
 

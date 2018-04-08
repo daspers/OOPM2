@@ -12,41 +12,41 @@
 
 class Akuarium{
 	private:
-		const int panjang, lebar; //Ukuran dari akuarium
-		List<Ikan> ikan; //Menyimpan ikan yang ada pada akuarium
-		List<MakananIkan> makananikan; //Menyimpan makanan ikan yang ada pada akuarium
-		List<Koin> koin; //Menyimpan koin yang ada pada akuarium
-		Siput siput; //Menyimpan siput yang ada pada akuarium
-		
+  		const int panjang, lebar; //Ukuran dari akuarium
+    	List<Ikan> ikan; //Menyimpan ikan yang ada pada akuarium
+    	List<MakananIkan> makananikan; //Menyimpan makanan ikan yang ada pada akuarium
+  		List<Koin> koin; //Menyimpan koin yang ada pada akuarium
+    	Siput siput; //Menyimpan siput yang ada pada akuarium
+    
 	public:
 		//ctor tanpa parameter dengan default size yang akan dideskripsikan dikemudian hari
-		Akuarium();
+	  	Akuarium();
 		//ctor dengan parameter panjang dan lebar
-		Akuarium(int,int);
+	    Akuarium(int,int);
 		//cctor
-		Akuarium(const Akuarium&);
-		//dtor
+	    Akuarium(const Akuarium&);
+	    //dtor
 		~Akuarium();
 		//operator overloading untuk assignment
 		Akuarium& operator=(const Akuarium&);
-		
-		//Mengembalikan panjang akuarium
+	    
+	    //Mengembalikan panjang akuarium
 		int getPanjang() const;
 		//Mengembalikan lebar akuarium
-		int getLebar() const;
+	    int getLebar() const;
 		//Mengembalikan list ikan
-		List<Ikan> getListIkan() const;
+	    List<Ikan> getListIkan() const;
 		//Mengembalikan list makanan ikan
-		List<MakananIkan> getListMakananIkan() const;
-		//Mengembalikan list koin
+	    List<MakananIkan> getListMakananIkan() const;
+	    //Mengembalikan list koin
 		List<Koin> getListKoin() const;
-		
+	    
 		//prosedur untuk mengupdate isi dari aquarium
-		void updateIsi();
+	    void updateIsi();
 		//prosedur untuk menggambarkan petak akuarium
-		void gambarAkuarium();
+	    void gambarAkuarium();
 		//prosedur untuk memunculkan benda akuarium secara random
-		void spawnItem();
+	    void spawnItem();
 };
 
 #endif

@@ -35,3 +35,7 @@ void Player::tambahTelur(){
 		banyaktelur++;
 	}
 }
+
+int Player::getKoin() const {
+	return jumlahkoin;
+}
