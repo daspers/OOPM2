@@ -4,16 +4,6 @@ Koin::Koin(double x, double y, double kecepatan,int nilai) : BendaAkuarium(x, y,
 	this->nilai = nilai;
 }
 
-/*
-Koin::Koin(const Koin& koin) {
-
-}
-
-Koin& Koin::operator=(const Koin& koin) {
-
-}
-*/
-
 //Mengembalikan nilai jumlah koi
 /*int Koin::getJumlahKoin(){
 	return jumlahkoin;
