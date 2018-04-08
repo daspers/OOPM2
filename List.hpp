@@ -11,7 +11,7 @@ public :
 	Node(const T&); // membuat node dengan value
 	//getter
 	T getVal() const; // mendapatkan value node yang ada
-	T& getRef() const;
+	T* getRef();
 	Node<T>* getNext() const; // mendapatkan address next
 	//setter
 	void setNext(Node<T>*); // menge-set address next;
@@ -42,7 +42,7 @@ public :
 	T delFirst(); // menghapus element pertama dan mengembalikkan nilainya
 	T delLast(); // menghapus elemen terakhir dan mengembalikkan nilainya
 	T get(int idx) const; // ambil nilai di indeks idx (asumsi idx benar)
-	T& getRef(int idx) const;
+	T* getRef(int idx);
 private :
 	Node<T> *node; // node yang ada
 };
@@ -64,7 +64,7 @@ T Node<T>::getVal() const
 }
 
 template<class T>
-T& Node<T>::getRef() const
+T* Node<T>::getRef()
 {
 	return &val;
 }
@@ -145,7 +145,6 @@ void List<T>::add(const T& tval){
 		return;
 	}
 	Node<T> *temp = node;
-	cout<<"wew"<<endl;
 	while(temp->getNext() != NULL){
 		temp  = temp->getNext();
 	}
@@ -242,7 +241,7 @@ T List<T>::get(int idx) const{
 }
 
 template<class T>
-T& List<T>::getRef(int idx) const{
+T* List<T>::getRef(int idx){
 	Node<T> *temp = node;
 	while(idx>0){
 		temp = temp->getNext();
