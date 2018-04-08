@@ -24,6 +24,10 @@ void Player::tambahKoin(int koin){
 	jumlahkoin+=koin;
 }
 
+void Player::setKoin(int x) {
+	jumlahkoin = x;
+}
+
 //Mengembalikan banyak telur dari pemain
 int Player::getBanyakTelur() const{
 	return banyaktelur;
