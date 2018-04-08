@@ -7,6 +7,8 @@
 #include "BendaAkuarium.hpp"
 #include "Koin.hpp"
 #include "oop.hpp"
+#include "List.hpp"
+#include "MakananIkan.hpp"
 
 using namespace std;
 
@@ -79,6 +81,8 @@ class Ikan : public BendaAkuarium {
 	
     void setImage(string x);
 
+    void cariMakan(List<MakananIkan>&);
+  	
   	//virtual method untuk gerak ikan
 	virtual void gerak();
 	
