@@ -7,6 +7,7 @@ Ikan::Ikan(double x, double y, double arah, double kecepatan) : BendaAkuarium(x,
 	waktumakan = 0;
 	banyakikan++;
 	image = "ikankiri.png";
+	waktumakan = time_since_start();
 }
 
 Ikan::Ikan(const Ikan& other) : BendaAkuarium(other.getX(), other.getY(), other.getArah(), other.getKecepatan()), tahankenyang(5), hunger(10) {
@@ -107,11 +108,46 @@ void Ikan::gerak() {
         pointtujuan.setX(rand()%SCREEN_WIDTH);
         pointtujuan.setY(rand()%SCREEN_HEIGHT);
     }
+    if (int(time_since_start()) - int(waktumakan) == tahankenyang) {
+    	lapar = true;
+    }
 }
 
-void Ikan::cariMakan(List<MakananIkan>& listmakananikan) {
+int Ikan::cariMakan(List<MakananIkan>& listmakananikan) {
 	Posisi now(this->getX(), this->getY());
 	int terdekat = listmakananikan.cariIndeksTerdekat(now);
+	
+	if (terdekat != -1) {
+		this->setArah(atan2(listmakananikan.getRef(terdekat)->getY() - this->getY(), listmakananikan.getRef(terdekat)->getX() - this->getX()));
+		if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
+	        image = "ikanlaparkanan.png";
+	    } else {
+	        image = "ikanlaparkiri.png";
+	    }
+	    this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
+    	this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
+    	if (abs(this->getX() - listmakananikan.getRef(terdekat)->getX()) < 0.1 && abs(this->getY() - listmakananikan.getRef(terdekat)->getY()) < 0.1) {
+	        lapar = false;
+	        waktumakan = time_since_start();
+	        return terdekat;
+	    }
+	} else {
+		this->setArah(atan2(pointtujuan.getY()-this->getY(), pointtujuan.getX()-this->getX()));
+	    if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
+	        image = "ikanlaparkanan.png";
+	    } else {
+	        image = "ikanlaparkiri.png";
+	    }
+	    this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
+	    this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
+	    if (abs(this->getX() - pointtujuan.getX()) < 0.1 && abs(this->getY() - pointtujuan.getY()) < 0.1) {
+	        pointtujuan.setX(rand()%SCREEN_WIDTH);
+	        pointtujuan.setY(rand()%SCREEN_HEIGHT);
+	    }
+	}
+
+
+	return -1;
 }
 
 int Ikan::getBanyakIkan() {
