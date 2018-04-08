@@ -20,8 +20,8 @@ class Siput : public BendaAkuarium {
   	void setPointTujuan(Posisi); //Mengubah nilai Point Tujuan dari Siput
 
   	void gerak(); //Prosedur untuk pergerakan dari iput
-    Posisi cariKoinTerdekat(List<Koin>); //Untuk mencari koin terdekat dari posisi siput
-    void ambilKoin(Koin); //Untuk mengambil suatu koin yang sudan mendekati radius dari siput
+	Posisi cariKoinTerdekat(List<Koin>); //Untuk mencari koin terdekat dari posisi siput
+	void ambilKoin(Koin); //Untuk mengambil suatu koin yang sudan mendekati radius dari siput
 };
 
 #endif
