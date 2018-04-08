@@ -95,22 +95,24 @@ void Ikan::setImage(string x){
 
 //virtual method untuk gerak ikan
 void Ikan::gerak() {
-	if (!lapar) {
-	    this->setArah(atan2(pointtujuan.getY()-this->getY(), pointtujuan.getX()-this->getX()));
-	    if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
-            image = "ikankanan.png";
-        } else {
-            image = "ikankiri.png";
-        }
-        this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
-        this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
-        if (abs(this->getX() - pointtujuan.getX()) < 0.1 && abs(this->getY() - pointtujuan.getY()) < 0.1) {
-            pointtujuan.setX(rand()%SCREEN_WIDTH);
-            pointtujuan.setY(rand()%SCREEN_HEIGHT);
-        }
-    } else {        
-
+    this->setArah(atan2(pointtujuan.getY()-this->getY(), pointtujuan.getX()-this->getX()));
+    if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
+        image = "ikankanan.png";
+    } else {
+        image = "ikankiri.png";
     }
+    this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
+    this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
+    if (abs(this->getX() - pointtujuan.getX()) < 0.1 && abs(this->getY() - pointtujuan.getY()) < 0.1) {
+        pointtujuan.setX(rand()%SCREEN_WIDTH);
+        pointtujuan.setY(rand()%SCREEN_HEIGHT);
+    }
+}
+
+void Ikan::cariMakan(List<MakananIkan>& listmakananikan) {
+	Posisi now(this->getX(), this->getY());
+	int terdekat = listmakananikan.cariIndeksTerdekat(now);
+	
 }
 
 int Ikan::getBanyakIkan() {
