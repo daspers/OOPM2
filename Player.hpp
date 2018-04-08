@@ -26,5 +26,7 @@ class Player {
         void tambahTelur();
 
         int getKoin() const;
+
+        void setKoin(int x);
 };
 #endif
