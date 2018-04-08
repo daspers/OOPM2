@@ -22,6 +22,7 @@ class Ikan : public BendaAkuarium {
 	private :
 	  	// Koin produksi;
 	    bool lapar;
+	    double waktuawal;
 	    const int tahankenyang; //Waktu untuk berapa lama dia kenyang
 	  	int waktumakan;
 	    const int hunger; //Waktu untuk menahan lapar
@@ -81,7 +82,7 @@ class Ikan : public BendaAkuarium {
 	
     void setImage(string x);
 
-    void cariMakan(List<MakananIkan>&);
+    int cariMakan(List<MakananIkan>&);
   	
   	//virtual method untuk gerak ikan
 	virtual void gerak();
