@@ -1,4 +1,5 @@
 #include <cstdio>
+#include "Posisi.hpp"
 
 #ifndef LIST_HPP
 #define LIST_HPP
@@ -43,8 +44,11 @@ public :
 	T delLast(); // menghapus elemen terakhir dan mengembalikkan nilainya
 	T get(int idx) const; // ambil nilai di indeks idx (asumsi idx benar)
 	T* getRef(int idx);
+	int getSize() const;
+	int cariIndeksTerdekat(Posisi x);
 private :
 	Node<T> *node; // node yang ada
+	int size;
 };
 
 template<class T>
@@ -87,6 +91,7 @@ void Node<T>::setValue(const T& tval) const{
 template<class T>
 List<T>::List(){
 	node = NULL;
+	size = 0;
 }
 
 template<class T>
@@ -96,10 +101,12 @@ List<T>::List(const List& L){
   	add(nl.getVal());
     nl = nl.getNext();
   }
+  size = L.getSize();
 }
 
 template<class T>
 List<T>::List(const T& temp){
+	size = 0;
 	node = new Node<T>(temp);
 }
 
@@ -140,6 +147,7 @@ using namespace std;
 
 template<class T>
 void List<T>::add(const T& tval){
+	size++;
 	if(node==NULL){
 		node = new Node<T>(tval);
 		return;
@@ -164,6 +172,7 @@ void List<T>::addFirst(const T& tval){
 
 template<class T>
 void List<T>::remove(const T& tval){
+	size--;
 	Node<T> *temp = node;
 	if(temp==NULL){
 		return;
@@ -185,6 +194,7 @@ void List<T>::remove(const T& tval){
 
 template<class T>
 void List<T>::removeIdx(int idx){
+	size--;
 	Node<T> *temp = node, *prev = NULL;
 	if(idx==0){
 		node = node->getNext();
@@ -248,6 +258,25 @@ T* List<T>::getRef(int idx){
 		idx--;
 	}
 	return temp->getRef();	
+}
+
+template<class T>
+int List<T>::getSize() const {
+	return size;
+}
+
+template<class T>
+int List<T>::cariIndeksTerdekat(Posisi x) {
+	double min = 99999999999;
+	int indeksmin = -1;
+	for(int i = 0; i < this->getSize(); i++) {
+		Posisi a(this->get(i).getX(), this->get(i).getY());
+		if (min > hitungjarak(a, x)) {
+			indeksmin = i;
+			min = hitungjarak(a, x);
+		}
+	}
+	return indeksmin;
 }
 
 #endif
