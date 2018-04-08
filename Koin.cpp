@@ -1,13 +1,10 @@
 #include "Koin.hpp"
+
 using namespace std;
 Koin::Koin(double x, double y, double kecepatan,int nilai) : BendaAkuarium(x, y, 0, kecepatan) {
 	this->nilai = nilai;
+	image = "koin.png";
 }
-
-//Mengembalikan nilai jumlah koi
-/*int Koin::getJumlahKoin(){
-	return jumlahkoin;
-}*/
 
 //Mengembalikan nilai dari sebuah koin
 int Koin::getNilai() const{

@@ -5,18 +5,26 @@
 
 using namespace std;
 
+class A {
+	public :
+		virtual void f() {
+			cout << "f\n";
+		}
+		virtual void g() {};
+};
+
+class B : public A {
+	public :
+		void f() {
+			cout << "f2\n";
+		}
+		void g() {
+			cout << "g2\n";
+		}
+};
+
 int main() {
-	List<MakananIkan> listmakananikan;
-
-	MakananIkan newmakananikan1(rand()%100);
-	listmakananikan.add(newmakananikan1);
-	MakananIkan newmakananikan2(rand()%100);
-	listmakananikan.add(newmakananikan2);
-	listmakananikan.removeIdx(1);
-
-	cout << MakananIkan::getBanyakMakananIkan() << "\n";
-
-	for(int i = 0; i < MakananIkan::getBanyakMakananIkan(); i++) {
-		cout << listmakananikan.get(i).getX() << "\n";
-	}
+	A* a = new B();
+	a->f();
+	a->g();
 }

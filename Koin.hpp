@@ -2,18 +2,25 @@
 #define KOIN_HPP
 
 #include "BendaAkuarium.hpp"
+#include <iostream>
+#include "oop.hpp"
+#include <cmath>
+
+using namespace std;
 
 class Koin : public BendaAkuarium {
 //Kelas koin ialah kelas turunan dari benda akuarium yang mempunyai atribut nilai dari koin tersebut
 	private : 
-  		const int nilai; //Menyimpan nilai dari suatu koin
-    		static int jumlahkoin; //Menyimpan banyaknya coin dari
+  		int nilai; //Menyimpan nilai dari suatu koin
+  		string image;
   	public :
 		//Constructor
 		Koin(double, double, double,int);
 		//getter
-		static int getJumlahKoin(); //Mengembalikan nilai jumlah koin
-		int getNilai(); //Mengembalikan nilai dari sebuah koin
+		int getNilai() const; //Mengembalikan nilai dari sebuah koin
+		string getImage() const;
+
+		void setImage(string i);
 
 		void gerak(); //Untuk pergerakan dari sebuah koin
 };

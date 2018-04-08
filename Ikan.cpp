@@ -2,11 +2,11 @@
 
 int Ikan::banyakikan = 0;
 
-Ikan::Ikan(double x, double y, double arah, double kecepatan) : BendaAkuarium(x, y, arah, kecepatan), tahankenyang(5), hunger(10), pointtujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT) {
+Ikan::Ikan(double x, double y, double arah, double kecepatan) : BendaAkuarium(x, y, arah, kecepatan), tahankenyang(5), hunger(10) {
 	lapar = false;
 	waktumakan = 0;
 	banyakikan++;
-	image = "ikankiri.png";
+	image = "ikankiri.gif";
 	waktumakan = time_since_start();
 }
 
@@ -100,7 +100,7 @@ void Ikan::gerak() {
     if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
         image = "ikankanan.png";
     } else {
-        image = "ikankiri.png";
+        image = "ikankiri.gif";
     }
     this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
     this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
@@ -113,46 +113,16 @@ void Ikan::gerak() {
     }
 }
 
-int Ikan::cariMakan(List<MakananIkan>& listmakananikan) {
-	Posisi now(this->getX(), this->getY());
-	int terdekat = listmakananikan.cariIndeksTerdekat(now);
-	
-	if (terdekat != -1) {
-		this->setArah(atan2(listmakananikan.getRef(terdekat)->getY() - this->getY(), listmakananikan.getRef(terdekat)->getX() - this->getX()));
-		if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
-	        image = "ikanlaparkanan.png";
-	    } else {
-	        image = "ikanlaparkiri.png";
-	    }
-	    this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
-    	this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
-    	if (abs(this->getX() - listmakananikan.getRef(terdekat)->getX()) < 0.1 && abs(this->getY() - listmakananikan.getRef(terdekat)->getY()) < 0.1) {
-	        lapar = false;
-	        waktumakan = time_since_start();
-	        return terdekat;
-	    }
-	} else {
-		this->setArah(atan2(pointtujuan.getY()-this->getY(), pointtujuan.getX()-this->getX()));
-	    if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
-	        image = "ikanlaparkanan.png";
-	    } else {
-	        image = "ikanlaparkiri.png";
-	    }
-	    this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
-	    this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
-	    if (abs(this->getX() - pointtujuan.getX()) < 0.1 && abs(this->getY() - pointtujuan.getY()) < 0.1) {
-	        pointtujuan.setX(rand()%SCREEN_WIDTH);
-	        pointtujuan.setY(rand()%SCREEN_HEIGHT);
-	    }
+bool Ikan::mati() {
+	if (time_since_start() - this->getWaktuMakan() - this->getTahanKenyang() >= this->getHunger()) {
+		return true;
 	}
-
-
-	return -1;
+	return false;
 }
 
-int Ikan::getBanyakIkan() {
-	return banyakikan;
-}
+bool Ikan::keluarkanKoinGuppy(){};
+
+int Ikan::cariMakanGuppy(List<MakananIkan>& listmakananikan){}
 
 //virtual method untuk ikan makan
 // void Ikan::makan();

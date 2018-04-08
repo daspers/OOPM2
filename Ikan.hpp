@@ -20,9 +20,7 @@ using namespace std;
 
 class Ikan : public BendaAkuarium {
 	private :
-	  	// Koin produksi;
 	    bool lapar;
-	    double waktuawal;
 	    const int tahankenyang; //Waktu untuk berapa lama dia kenyang
 	  	int waktumakan;
 	    const int hunger; //Waktu untuk menahan lapar
@@ -82,12 +80,12 @@ class Ikan : public BendaAkuarium {
 	
     void setImage(string x);
 
-    int cariMakan(List<MakananIkan>&);
-  	
+    bool mati();
+
   	//virtual method untuk gerak ikan
 	virtual void gerak();
-	
-	static int getBanyakIkan();
+	virtual int cariMakanGuppy(List<MakananIkan>& listmakananikan);
+	virtual bool keluarkanKoinGuppy();
 
 	//virtual method untuk ikan makan
 	// virtual void makan();
