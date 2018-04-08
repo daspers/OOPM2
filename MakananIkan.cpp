@@ -28,9 +28,9 @@ int MakananIkan::getBanyakMakananIkan() {
 }
 
 bool MakananIkan::operator==(const MakananIkan& other) {
-	return (abs(this->getX() - other.getX()) < 0.1 && abs(this->getY() - other.getY()) < 0.1);
+	return (this->getX() == other.getX() && this->getY() == other.getY());
 }
 
 bool MakananIkan::operator!=(const MakananIkan& other) {
-	return (abs(this->getX() - other.getX()) > 0.1 || abs(this->getY() - other.getY()) > 0.1);
+	return (this->getX() != other.getX() || this->getY() != other.getY());
 }
