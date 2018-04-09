@@ -20,7 +20,7 @@ class MakananIkan : public BendaAkuarium {
     string image;
   public :
     //Ctor
-    MakananIkan(int x);
+    MakananIkan(double x, double y);
     MakananIkan();
 
     //Dtor
