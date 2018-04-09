@@ -1,5 +1,4 @@
 #include "Piranha.hpp"
-
 string Piranha::daftargambar[4] = {"piranhakiri.png", "piranhakanan.png", "piranhalaparkiri.png", "piranhalaparkanan.png"};
 
 //public :
@@ -51,7 +50,11 @@ bool Piranha::keluarkanCoinPiranha(List<Koin>& listkoi){
 
 //Fungsi yang membuat ikan bergerak ke suatu tempat
 void Piranha::gerak(){
-	this->setArah(atan2(this->getPointTujuan().getY()-this->getY(), this->getPointTujuan().getX()-this->getX()));
+
+	if (int(time_since_start())%5 == 0 ) {
+    	this->setArah(atan2(this->getPointTujuan().getY()-this->getY(), this->getPointTujuan().getX()-this->getX()));
+    }
+	
     if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
         this->setImage(Piranha::daftargambar[1]);
     } else {
@@ -59,9 +62,11 @@ void Piranha::gerak(){
     }
     this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
     this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
-    if (abs(this->getX() - this->getPointTujuan().getX()) < 0.1 && abs(this->getY() - this->getPointTujuan().getY()) < 0.1) {
+    cout << this->getX() << " " << this->getPointTujuan().getX() << " " << this->getY() << " " << this->getPointTujuan().getY() << "\n";
+    if (abs(this->getX() - this->getPointTujuan().getX()) < 1 && abs(this->getY() - this->getPointTujuan().getY()) < 1) {
     	Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
     	this->setPointTujuan(tujuan);
+
     }
     if (int(time_since_start() - this->getWaktuMakan()) == this->getTahanKenyang()) {
     	this->setLapar(true);
@@ -97,7 +102,7 @@ int Piranha::cariIkanTerdekat(List<Ikan*>& listikan){
 	    }
 	    this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
     	this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
-    	if (abs(this->getX() - listikan.get(terdekat)->getX()) < 0.1 && abs(this->getY() - listikan.get(terdekat)->getY()) < 0.1) {
+    	if (abs(this->getX() - listikan.get(terdekat)->getX()) < 1 && abs(this->getY() - listikan.get(terdekat)->getY()) < 1) {
 	        this->setLapar(false);
 	        this->setWaktuMakan(time_since_start());
 	        return terdekat;
@@ -111,7 +116,7 @@ int Piranha::cariIkanTerdekat(List<Ikan*>& listikan){
 	    }
 	    this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
 	    this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
-	    if (abs(this->getX() - this->getPointTujuan().getX()) < 0.1 && abs(this->getY() - this->getPointTujuan().getY()) < 0.1) {
+	    if (abs(this->getX() - this->getPointTujuan().getX()) < 1 && abs(this->getY() - this->getPointTujuan().getY()) < 1) {
 	        Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
     		this->setPointTujuan(tujuan);
 	    }
