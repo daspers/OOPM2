@@ -12,13 +12,14 @@
 #include "Guppy.hpp";
 
 // using namespace std;
-const double PI = acos(-1);
+#define PI 3.14159265
 
 const double speed = 50; // pixels per second
 
 int main( int argc, char* args[] )
 {
     init();
+    
     double a = 30;
     bool sampai = false;
     int asalx = 0;
@@ -95,11 +96,6 @@ int main( int argc, char* args[] )
                     running = false;
                     break;
                 }    
-                case SDLK_i: {
-                    Ikan* newikan = new Ikan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 2000);
-                    listofikan.add(newikan);
-                    break;
-                }             
                 case SDLK_m: {
                     MakananIkan newmakananikan(rand()%SCREEN_WIDTH);
                     listofmakananikan.add(newmakananikan);
@@ -130,13 +126,14 @@ int main( int argc, char* args[] )
                     listofmakananikan.removeIdx(makanandimakan);
                 }
                 if (listofikan.get(i)->mati()) {
+                    cout << i << "\n";
                     listofikan.removeIdx(i);
                 }
             } else {
                 listofikan.get(i)->gerak();
             }
             if (listofikan.get(i)->keluarkanKoinGuppy()) {
-                Koin newkoin(listofikan.get(i)->getX(), listofikan.get(i)->getY(), 10, 50);
+                Koin newkoin(listofikan.get(i)->getX(), listofikan.get(i)->getY(), 10, 50, listofikan.get(i)->getLevel());
                 listofkoin.add(newkoin);
             }
         }

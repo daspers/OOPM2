@@ -122,6 +122,8 @@ bool Ikan::mati() {
 
 bool Ikan::keluarkanKoinGuppy(){};
 
+int Ikan::getLevel() const{};
+
 int Ikan::cariMakanGuppy(List<MakananIkan>& listmakananikan){}
 
 //virtual method untuk ikan makan

@@ -86,6 +86,7 @@ class Ikan : public BendaAkuarium {
 	virtual void gerak();
 	virtual int cariMakanGuppy(List<MakananIkan>& listmakananikan);
 	virtual bool keluarkanKoinGuppy();
+	virtual int getLevel() const;
 
 	//virtual method untuk ikan makan
 	// virtual void makan();

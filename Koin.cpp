@@ -1,9 +1,12 @@
 #include "Koin.hpp"
 
 using namespace std;
-Koin::Koin(double x, double y, double kecepatan,int nilai) : BendaAkuarium(x, y, 0, kecepatan) {
+
+string Koin::daftargambar[4] = {"koin1.png", "koin2.png", "koin3.png", "koin4.png"};
+
+Koin::Koin(double x, double y, double kecepatan,int nilai, int i) : BendaAkuarium(x, y, 0, kecepatan), level(i) {
 	this->nilai = nilai;
-	image = "koin.png";
+	image = daftargambar[i-1];
 }
 
 //Mengembalikan nilai dari sebuah koin
@@ -14,6 +17,10 @@ int Koin::getNilai() const{
 //Mengembalikan nama file dari image Koin 
 string Koin::getImage() const {
 	return image;
+}
+
+int Koin::getLevel() const {
+	return level;
 }
 
 //Mengubah nama file image koin
