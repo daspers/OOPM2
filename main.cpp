@@ -51,6 +51,7 @@ int main( int argc, char* args[] )
     int loop = 0;
     
     bool mainmenu = true;
+    bool menang= false;
 
     while (running) {
         double now = time_since_start();
@@ -85,7 +86,6 @@ int main( int argc, char* args[] )
 
         if (mainmenu) {
             clear_screen();
-
             for (auto key : get_clicked_mouse()) {
                 switch(key) {
                     case 1: {
@@ -99,9 +99,23 @@ int main( int argc, char* args[] )
                     }
                 }
             }    
-            draw_image("mainmenu.png", SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-
+            draw_image("mainmenu.png",SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             update_screen(); 
+        }else if (menang) {
+            for (auto key : get_clicked_mouse()) {
+                switch(key) {
+                    case 1: {
+                        cout << get_clicked_mouseX() << " " << get_clicked_mouseY() << "\n";
+                        if ((get_clicked_mouseX() <= SCREEN_WIDTH && get_clicked_mouseX() >= 0) && (get_clicked_mouseY() <= SCREEN_HEIGHT && get_clicked_mouseY() >= 0)) {
+                            running= false;
+                        }
+                        get_clicked_mouse().erase(1);
+                        break;
+                    }
+                }
+            }    
+            draw_image("congratulations.png",SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+            update_screen();
         } else {
             for (auto key : get_clicked_mouse()) {
                 switch(key) {
@@ -116,9 +130,21 @@ int main( int argc, char* args[] )
                             habibi.tambahKoin(listofkoin.getRef(ketemu)->getNilai());
                             listofkoin.removeIdx(ketemu);
                         } else {
-                            MakananIkan newmakananikan(get_clicked_mouseX(), get_clicked_mouseY());
-                            listofmakananikan.add(newmakananikan);
-                            habibi.setKoin(habibi.getKoin() - 5);
+                            if (((get_clicked_mouseX() > 753 || get_clicked_mouseX() < 683)) && ((get_clicked_mouseY() > 135 || get_clicked_mouseY() < 65))){
+                                MakananIkan newmakananikan(get_clicked_mouseX(), get_clicked_mouseY());
+                                listofmakananikan.add(newmakananikan);
+                                habibi.setKoin(habibi.getKoin() - 5);
+                            }
+                        }
+                        if (!menang){
+                            if ((get_clicked_mouseX() <= 753 && get_clicked_mouseX() >= 683) && (get_clicked_mouseY() <= 135 && get_clicked_mouseY() >= 65)) {
+                                habibi.tambahTelur();
+                                if (habibi.getBanyakTelur()==3){
+                                menang=true;
+                            }
+                        }
+                        get_clicked_mouse().erase(1);
+                        break;
                         }
                         get_clicked_mouse().erase(1);
                         
@@ -159,8 +185,17 @@ int main( int argc, char* args[] )
                         habibi.kurangkanKoin(200);
                         break;
                     }
+                    case SDLK_t: {
+                        habibi.kurangkanKoin(100);
+                        habibi.tambahTelur();
+                        if (habibi.getBanyakTelur()==3){
+                            menang=true;
+                        }
+                        break;
+                    }
                 }
             }
+
 
             int dapatkoin = siput.cariKoin(listofkoin);
             
@@ -254,10 +289,18 @@ int main( int argc, char* args[] )
             for(int i = 0; i < listofkoin.getSize(); i++) {
                 draw_image(listofkoin.getRef(i)->getImage(), listofkoin.get(i).getX(), listofkoin.get(i).getY()-24);
             }
+            if (habibi.getBanyakTelur()==0){
+                draw_image("telor1.png",718,100);
+            }else if (habibi.getBanyakTelur()==1){
+                draw_image("telor2.png",718,100);
+            }else{
+                draw_image("telor3.png",718,100);
+            }
 
             draw_image(siput.getImage(), siput.getX(), siput.getY()-24);
 
             draw_text("Koin Player : " +  std::to_string(habibi.getKoin()), 18, 10, 50, 0, 0, 0);
+            draw_text("Banyak telur: " + std::to_string(habibi.getBanyakTelur()),18,10,100,0,0,0);
             update_screen();            
         }
 
