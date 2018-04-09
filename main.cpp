@@ -64,20 +64,32 @@ int main( int argc, char* args[] )
         // Kecepatan dikalikan dengan perbedaan waktu supaya kecepatan ikan
         // konstan pada komputer yang berbeda.
 
-        for (auto key : get_pressed_keys()) {
-            switch (key) {
-            case SDLK_UP:
-                cy -= speed * sec_since_last;
-                break;
-            case SDLK_DOWN:
-                cy += speed * sec_since_last;
-                break;
-            case SDLK_LEFT:
-                cx -= speed * sec_since_last;
-                break;
-            case SDLK_RIGHT:
-                cx += speed * sec_since_last;
-                break;
+        // for (auto key : get_pressed_keys()) {
+        //     switch (key) {
+        //     case SDLK_UP:
+        //         cy -= speed * sec_since_last;
+        //         break;
+        //     case SDLK_DOWN:
+        //         cy += speed * sec_since_last;
+        //         break;
+        //     case SDLK_LEFT:
+        //         cx -= speed * sec_since_last;
+        //         break;
+        //     case SDLK_RIGHT:
+        //         cx += speed * sec_since_last;
+        //         break;
+        //     }
+        // }
+
+        for (auto key : get_clicked_mouse()) {
+            switch(key) {
+                case 1: {
+                    MakananIkan newmakananikan(get_clicked_mouseX(), get_clicked_mouseY());
+                    listofmakananikan.add(newmakananikan);
+                    habibi.setKoin(habibi.getKoin() - 5);
+                    get_clicked_mouse().erase(1);
+                    break;
+                }
             }
         }
 
@@ -96,7 +108,7 @@ int main( int argc, char* args[] )
                     break;
                 }    
                 case SDLK_m: {
-                    MakananIkan newmakananikan(rand()%SCREEN_WIDTH);
+                    MakananIkan newmakananikan(rand()%SCREEN_WIDTH, 0);
                     listofmakananikan.add(newmakananikan);
                     habibi.setKoin(habibi.getKoin() - 5);
                     break;
@@ -131,9 +143,7 @@ int main( int argc, char* args[] )
                         listofmakananikan.removeIdx(makanandimakan);
                     }
                     if (listofikan.get(i)->mati()) {
-                        cout << i << "\n";
                         listofikan.removeIdx(i);
-                        cout <<listofikan.getSize();
                     }
                 } else {
                     listofikan.get(i)->gerak();
@@ -146,9 +156,7 @@ int main( int argc, char* args[] )
                 if (listofikan.get(i)->getLapar()) {
                     int ikandimakan = listofikan.get(i)->cariIkanTerdekat(listofikan);
                     if (ikandimakan != -1) {
-                        cout << ikandimakan << "\n";
                         listofikan.removeIdx(ikandimakan);
-                        cout << "HAI\n";
                     }
                 } else {
                     listofikan.get(i)->gerak();
