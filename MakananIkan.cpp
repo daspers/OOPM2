@@ -6,13 +6,14 @@ MakananIkan::MakananIkan() : BendaAkuarium(0, 0, 0, 500) {
 	MakananIkan::banyakmakananikan++;
 }
 
-//Ctor
-MakananIkan::MakananIkan(int x) : BendaAkuarium(x, 0, 0, 500) {
-	MakananIkan::banyakmakananikan++;
-	image = "makananikan";
-}
 
 MakananIkan::~MakananIkan() {
+}
+
+//Ctor
+MakananIkan::MakananIkan(double x, double y) : BendaAkuarium(x, y, 0, 500) {
+	MakananIkan::banyakmakananikan++;
+	image = "makananikan";
 }
 
 void MakananIkan::gerak(){ //Update attribut ketika makanan ikan bergerak
