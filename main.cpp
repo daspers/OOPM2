@@ -12,7 +12,7 @@
 #include "Guppy.hpp";
 
 // using namespace std;
-#define PI 3.14159265
+const double PI = acos(-1);
 
 const double speed = 50; // pixels per second
 
