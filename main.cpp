@@ -10,6 +10,7 @@
 #include "Koin.hpp";
 #include "Siput.hpp";
 #include "Guppy.hpp";
+#include "Piranha.hpp";
 
 // using namespace std;
 #define PI 3.14159265
@@ -49,8 +50,6 @@ int main( int argc, char* args[] )
     double prevtime = time_since_start();
 
     int detiknow = 0;
-
-    Ikan* ikan1 = new Ikan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 2000);
     while (running) {
         double now = time_since_start();
         double sec_since_last = now - prevtime;
@@ -107,6 +106,11 @@ int main( int argc, char* args[] )
                     listofikan.add(newguppy);
                     break;
                 }
+                case SDLK_p: {
+                    Ikan* newpiranha = new Piranha(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 4000);
+                    listofikan.add(newpiranha);
+                    break;
+                }
             }
         }
 
@@ -120,22 +124,37 @@ int main( int argc, char* args[] )
         }
 
         for(int i = 0; i < listofikan.getSize(); i++) {
-            if (listofikan.get(i)->getLapar()) {
-                int makanandimakan = listofikan.get(i)->cariMakanGuppy(listofmakananikan);
-                if (makanandimakan != -1) {
-                    listofmakananikan.removeIdx(makanandimakan);
+            if (listofikan.get(i)->getType() == "Guppy") {
+                if (listofikan.get(i)->getLapar()) {
+                    int makanandimakan = listofikan.get(i)->cariMakanGuppy(listofmakananikan);
+                    if (makanandimakan != -1) {
+                        listofmakananikan.removeIdx(makanandimakan);
+                    }
+                    if (listofikan.get(i)->mati()) {
+                        cout << i << "\n";
+                        listofikan.removeIdx(i);
+                        cout <<listofikan.getSize();
+                    }
+                } else {
+                    listofikan.get(i)->gerak();
                 }
-                if (listofikan.get(i)->mati()) {
-                    cout << i << "\n";
-                    listofikan.removeIdx(i);
-                }
+                if (listofikan.get(i)->keluarkanKoinGuppy()) {
+                    Koin newkoin(listofikan.get(i)->getX(), listofikan.get(i)->getY(), 10, 50, listofikan.get(i)->getLevel());
+                    listofkoin.add(newkoin);
+                }                
             } else {
-                listofikan.get(i)->gerak();
+                if (listofikan.get(i)->getLapar()) {
+                    int ikandimakan = listofikan.get(i)->cariIkanTerdekat(listofikan);
+                    if (ikandimakan != -1) {
+                        cout << ikandimakan << "\n";
+                        listofikan.removeIdx(ikandimakan);
+                        cout << "HAI\n";
+                    }
+                } else {
+                    listofikan.get(i)->gerak();
+                }
             }
-            if (listofikan.get(i)->keluarkanKoinGuppy()) {
-                Koin newkoin(listofikan.get(i)->getX(), listofikan.get(i)->getY(), 10, 50, listofikan.get(i)->getLevel());
-                listofkoin.add(newkoin);
-            }
+            
         }
 
         for(int i = 0; i < listofmakananikan.getSize(); i++) {

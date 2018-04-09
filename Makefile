@@ -1,5 +1,5 @@
 # Masukkan semua file cpp Anda
-OBJS = Ikan.cpp Posisi.cpp Movement.cpp main.cpp oop.cpp Player.cpp MakananIkan.cpp Koin.cpp Siput.cpp Guppy.cpp
+OBJS = Ikan.cpp Posisi.cpp Movement.cpp main.cpp oop.cpp Player.cpp MakananIkan.cpp Koin.cpp Siput.cpp Guppy.cpp Piranha.cpp
 
 CC = g++
 COMPILER_FLAGS = -std=c++14 -Wall -O2

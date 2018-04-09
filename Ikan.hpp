@@ -32,7 +32,7 @@ class Ikan : public BendaAkuarium {
 
 	public :
 	//ctor tanpa parameter dengan kondisi default yang akan didefenisikan kedepannya
-  	Ikan(double x, double y, double arah, double kecepatan);
+  	Ikan(double x, double y, double arah, double kecepatan, string type);
 
 	//cctor
     Ikan(const Ikan&);
@@ -87,6 +87,7 @@ class Ikan : public BendaAkuarium {
 	virtual int cariMakanGuppy(List<MakananIkan>& listmakananikan);
 	virtual bool keluarkanKoinGuppy();
 	virtual int getLevel() const;
+	virtual int cariIkanTerdekat(List<Ikan*>&);
 
 	//virtual method untuk ikan makan
 	// virtual void makan();

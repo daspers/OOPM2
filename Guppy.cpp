@@ -6,14 +6,14 @@ int Guppy::makanannaiklevel = 5;
 string Guppy::daftargambar[3][4] = {{"guppy1kiri.png", "guppy1kanan.png", "guppylapar1kiri.png", "guppylapar1kanan.png"}, {"guppy2kiri.png", "guppy2kanan.png", "guppylapar2kiri.png", "guppylapar2kanan.png"}, {"guppy3kiri.png", "guppy3kanan.png", "guppylapar3kiri.png", "guppylapar3kanan.png"}};
 
 
-Guppy::Guppy(double x, double y, double arah, double kecepatan) : Ikan(x, y, arah, kecepatan), waktukeluarkankoin(5) {
+Guppy::Guppy(double x, double y, double arah, double kecepatan) : Ikan(x, y, arah, kecepatan, "Guppy"), waktukeluarkankoin(5) {
 	level = 1;
 	jumlahmakanyangdimakan = 0;
 	waktukoin = time_since_start();	
 	this->setImage("guppy1kiri.png");
 }
 
-Guppy::Guppy(const Guppy& other) : Ikan(other.getX(), other.getY(), other.getArah(), other.getKecepatan()), waktukeluarkankoin(5) {
+Guppy::Guppy(const Guppy& other) : Ikan(other.getX(), other.getY(), other.getArah(), other.getKecepatan(), "Guppy"), waktukeluarkankoin(5) {
 	level = other.getLevel();
 	jumlahmakanyangdimakan = other.getJumlahMakanYangDimakan();
 	waktukoin = time_since_start();

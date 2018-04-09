@@ -2,11 +2,12 @@
 
 int Ikan::banyakikan = 0;
 
-Ikan::Ikan(double x, double y, double arah, double kecepatan) : BendaAkuarium(x, y, arah, kecepatan), tahankenyang(5), hunger(10) {
+Ikan::Ikan(double x, double y, double arah, double kecepatan, string type) : BendaAkuarium(x, y, arah, kecepatan), tahankenyang(5), hunger(10) {
 	lapar = false;
 	waktumakan = 0;
 	banyakikan++;
 	image = "ikankiri.gif";
+	this->type = type;
 	waktumakan = time_since_start();
 }
 
@@ -126,5 +127,6 @@ int Ikan::getLevel() const{};
 
 int Ikan::cariMakanGuppy(List<MakananIkan>& listmakananikan){}
 
+int Ikan::cariIkanTerdekat(List<Ikan*>&){}
 //virtual method untuk ikan makan
 // void Ikan::makan();
