@@ -2,29 +2,17 @@
 #include <cstring>
 #include "List.hpp"
 #include "MakananIkan.hpp"
+#include "Ikan.hpp"
+#include "Posisi.hpp"
+#include "Movement.hpp"
+#include "BendaAkuarium.hpp"
+#include "Guppy.hpp"
+#include "oop.hpp"
 
 using namespace std;
 
-class A {
-	public :
-		virtual void f() {
-			cout << "f\n";
-		}
-		virtual void g() {};
-};
-
-class B : public A {
-	public :
-		void f() {
-			cout << "f2\n";
-		}
-		void g() {
-			cout << "g2\n";
-		}
-};
-
 int main() {
-	A* a = new B();
-	a->f();
-	a->g();
+	List<Ikan*> listofikan;
+    Ikan* newguppy = new Guppy(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 2000);
+	listofikan.add(newguppy);
 }

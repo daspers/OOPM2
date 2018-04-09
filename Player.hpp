@@ -18,6 +18,7 @@ class Player {
         
         //Mengubah nilai koin dari pemain
         void tambahKoin(int);
+        void kurangkanKoin(int);
         
         //Mengembalikan banyak telur dari pemain
         int getBanyakTelur() const;

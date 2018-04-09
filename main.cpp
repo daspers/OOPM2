@@ -46,10 +46,12 @@ int main( int argc, char* args[] )
     double cx = SCREEN_WIDTH / 2;
 
     bool running = true;
-
     double prevtime = time_since_start();
-
     int detiknow = 0;
+    int loop = 0;
+    
+    bool mainmenu = true;
+
     while (running) {
         double now = time_since_start();
         double sec_since_last = now - prevtime;
@@ -81,134 +83,184 @@ int main( int argc, char* args[] )
         //     }
         // }
 
-        for (auto key : get_clicked_mouse()) {
-            switch(key) {
-                case 1: {
-                    MakananIkan newmakananikan(get_clicked_mouseX(), get_clicked_mouseY());
-                    listofmakananikan.add(newmakananikan);
-                    habibi.setKoin(habibi.getKoin() - 5);
-                    get_clicked_mouse().erase(1);
-                    break;
-                }
-            }
-        }
+        if (mainmenu) {
+            clear_screen();
 
-        // Proses masukan yang bersifat "tombol"
-        for (auto key : get_tapped_keys()) {
-            switch (key) {
-            // r untuk reset
-                case SDLK_r: {
-                    cy = SCREEN_HEIGHT / 2;
-                    cx = SCREEN_WIDTH / 2;
-                    break;
+            for (auto key : get_clicked_mouse()) {
+                switch(key) {
+                    case 1: {
+                        cout << get_clicked_mouseX() << " " << get_clicked_mouseY() << "\n";
+                        if ((get_clicked_mouseX() <= 736 && get_clicked_mouseX() >= 498) && (get_clicked_mouseY() <= 145 && get_clicked_mouseY() >= 64)) {
+                            mainmenu = false;
+                        }
+                        get_clicked_mouse().erase(1);
+                    
+                        break;
+                    }
                 }
-                // x untuk keluar
-                case SDLK_x: {
-                    running = false;
-                    break;
-                }    
-                case SDLK_m: {
-                    MakananIkan newmakananikan(rand()%SCREEN_WIDTH, 0);
-                    listofmakananikan.add(newmakananikan);
-                    habibi.setKoin(habibi.getKoin() - 5);
-                    break;
-                }
-                case SDLK_g: {
-                    Ikan* newguppy = new Guppy(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 2000);
-                    listofikan.add(newguppy);
-                    break;
-                }
-                case SDLK_p: {
-                    Ikan* newpiranha = new Piranha(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 4000);
-                    listofikan.add(newpiranha);
-                    break;
-                }
-            }
-        }
+            }    
+            draw_image("mainmenu.png", SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 
-        if (listofkoin.getSize() <= 0) {
-            siput.gerak();
+            update_screen(); 
         } else {
+            for (auto key : get_clicked_mouse()) {
+                switch(key) {
+                    case 1: {
+                        int ketemu = -1;
+                        for(int i = 0; i < listofkoin.getSize() && ketemu == -1; i++) {
+                            if (abs(listofkoin.getRef(i)->getX() - get_clicked_mouseX()) < 40 && abs(listofkoin.getRef(i)->getY() - get_clicked_mouseY()-24) < 40) {
+                                ketemu = i;
+                            }
+                        }
+                        if (ketemu != -1) {
+                            habibi.tambahKoin(listofkoin.getRef(ketemu)->getNilai());
+                            listofkoin.removeIdx(ketemu);
+                        } else {
+                            MakananIkan newmakananikan(get_clicked_mouseX(), get_clicked_mouseY());
+                            listofmakananikan.add(newmakananikan);
+                            habibi.setKoin(habibi.getKoin() - 5);
+                        }
+                        get_clicked_mouse().erase(1);
+                        
+                        break;
+                    }
+                }
+            }
+
+            // Proses masukan yang bersifat "tombol"
+            for (auto key : get_tapped_keys()) {
+                switch (key) {
+                // r untuk reset
+                    case SDLK_r: {
+                        cy = SCREEN_HEIGHT / 2;
+                        cx = SCREEN_WIDTH / 2;
+                        break;
+                    }
+                    // x untuk keluar
+                    case SDLK_x: {
+                        running = false;
+                        break;
+                    }    
+                    case SDLK_m: {
+                        MakananIkan newmakananikan(rand()%SCREEN_WIDTH, 0);
+                        listofmakananikan.add(newmakananikan);
+                        habibi.kurangkanKoin(5);
+                        break;
+                    }
+                    case SDLK_g: {
+                        Ikan* newguppy = new Guppy(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 2000);
+                        listofikan.add(newguppy);
+                        habibi.kurangkanKoin(100);
+                        break;
+                    }
+                    case SDLK_p: {
+                        Ikan* newpiranha = new Piranha(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 4000);
+                        listofikan.add(newpiranha);
+                        habibi.kurangkanKoin(200);
+                        break;
+                    }
+                }
+            }
+
             int dapatkoin = siput.cariKoin(listofkoin);
+            
             if (dapatkoin != -1) {
                 listofkoin.removeIdx(dapatkoin);
             }
-        }
 
-        for(int i = 0; i < listofikan.getSize(); i++) {
-            if (listofikan.get(i)->getType() == "Guppy") {
-                if (listofikan.get(i)->getLapar()) {
-                    int makanandimakan = listofikan.get(i)->cariMakanGuppy(listofmakananikan);
-                    if (makanandimakan != -1) {
-                        listofmakananikan.removeIdx(makanandimakan);
+
+            loop = 0;
+            while(loop < listofikan.getSize()) {
+                if (listofikan.get(loop)->getType() == "Guppy") {
+                    if (listofikan.get(loop)->mati()) {
+                        listofikan.removeIdx(loop);
+                        continue;
+                    }  
+                    if (listofikan.get(loop)->getLapar()) {
+                        int makanandimakan = listofikan.get(loop)->cariMakanGuppy(listofmakananikan);
+                        if (makanandimakan != -1) {
+                            listofmakananikan.removeIdx(makanandimakan);
+                        }
+                    } else {
+                        listofikan.get(loop)->gerak();
                     }
-                    if (listofikan.get(i)->mati()) {
-                        listofikan.removeIdx(i);
-                    }
+                    if (listofikan.get(loop)->keluarkanKoinGuppy()) {
+                        if (listofikan.get(loop)->getLevel() == 1) {
+                            Koin newkoin(listofikan.get(loop)->getX(), listofikan.get(loop)->getY(), 10, 10, 1);
+                            listofkoin.add(newkoin);
+                        } else if (listofikan.get(loop)->getLevel() == 2) {
+                            Koin newkoin(listofikan.get(loop)->getX(), listofikan.get(loop)->getY(), 10, 20, 2);
+                            listofkoin.add(newkoin);
+                        } else {
+                            Koin newkoin(listofikan.get(loop)->getX(), listofikan.get(loop)->getY(), 10, 50, 3);
+                            listofkoin.add(newkoin);
+                        }
+                    }              
                 } else {
-                    listofikan.get(i)->gerak();
+                    if (listofikan.get(loop)->mati()) {
+                        listofikan.removeIdx(loop);
+                        continue;
+                    }
+                    if (listofikan.get(loop)->getLapar()) {
+                        int ikandimakan = listofikan.get(loop)->cariIkanTerdekat(listofikan);
+                        if (ikandimakan != -1) {
+                            Koin newkoin(listofikan.get(loop)->getX(), listofikan.get(loop)->getY(), 10, 100*(listofikan.get(ikandimakan)->getLevel()+1), 4);
+                            listofkoin.add(newkoin);
+                            listofikan.removeIdx(ikandimakan);
+                        }
+                    } else {
+                        listofikan.get(loop)->gerak();
+                    }
                 }
-                if (listofikan.get(i)->keluarkanKoinGuppy()) {
-                    Koin newkoin(listofikan.get(i)->getX(), listofikan.get(i)->getY(), 10, 50, listofikan.get(i)->getLevel());
-                    listofkoin.add(newkoin);
-                }                
-            } else {
-                if (listofikan.get(i)->getLapar()) {
-                    int ikandimakan = listofikan.get(i)->cariIkanTerdekat(listofikan);
-                    if (ikandimakan != -1) {
-                        listofikan.removeIdx(ikandimakan);
-                    }
-                } else {
-                    listofikan.get(i)->gerak();
+                loop++;
+            }
+
+            for(int i = 0; i < listofmakananikan.getSize(); i++) {
+                listofmakananikan.getRef(i)->gerak();
+                if (abs(listofmakananikan.get(i).getY() - SCREEN_HEIGHT) < 0.1) {
+                    listofmakananikan.removeIdx(i);
                 }
             }
-            
-        }
 
-        for(int i = 0; i < listofmakananikan.getSize(); i++) {
-            listofmakananikan.getRef(i)->gerak();
-            if (abs(listofmakananikan.get(i).getY() - SCREEN_HEIGHT) < 0.1) {
-                listofmakananikan.removeIdx(i);
+            for(int i = 0; i < listofkoin.getSize(); i++) {
+                listofkoin.getRef(i)->gerak();
             }
+
+            // Update FPS setiap detik
+            frames_passed++;
+            if (now - fpc_start > 1) {
+                std::ostringstream strs;
+                strs << "FPS: " ;
+                strs << frames_passed/(now - fpc_start);
+                fps_text = strs.str();;
+                fpc_start = now;
+                frames_passed = 0;
+            }
+
+            // Gambar ikan di posisi yang tepat.
+            clear_screen();
+            draw_image("Aquarium6.jpg", SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+            draw_text("Panah untuk bergerak, r untuk reset, x untuk keluar", 18, 10, 10, 0, 0, 0);
+            draw_text(fps_text, 18, 10, 30, 0, 0, 0);
+
+            for(int i = 0; i < listofikan.getSize(); i++) {
+                draw_image(listofikan.get(i)->getImage(), listofikan.get(i)->getX(), listofikan.get(i)->getY()-24);
+            }
+
+            for(int i = 0; i < listofmakananikan.getSize(); i++) {
+                draw_image(listofmakananikan.getRef(i)->getImage(), listofmakananikan.get(i).getX(), listofmakananikan.get(i).getY()-24);
+            }
+
+            for(int i = 0; i < listofkoin.getSize(); i++) {
+                draw_image(listofkoin.getRef(i)->getImage(), listofkoin.get(i).getX(), listofkoin.get(i).getY()-24);
+            }
+
+            draw_image(siput.getImage(), siput.getX(), siput.getY()-24);
+
+            draw_text("Koin Player : " +  std::to_string(habibi.getKoin()), 18, 10, 50, 0, 0, 0);
+            update_screen();            
         }
 
-        for(int i = 0; i < listofkoin.getSize(); i++) {
-            listofkoin.getRef(i)->gerak();
-        }
-
-        // Update FPS setiap detik
-        frames_passed++;
-        if (now - fpc_start > 1) {
-            std::ostringstream strs;
-            strs << "FPS: " ;
-            strs << frames_passed/(now - fpc_start);
-            fps_text = strs.str();;
-            fpc_start = now;
-            frames_passed = 0;
-        }
-
-        // Gambar ikan di posisi yang tepat.
-        clear_screen();
-        draw_image("Aquarium6.jpg", SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-        draw_text("Panah untuk bergerak, r untuk reset, x untuk keluar", 18, 10, 10, 0, 0, 0);
-        draw_text(fps_text, 18, 10, 30, 0, 0, 0);
-
-        for(int i = 0; i < listofikan.getSize(); i++) {
-            draw_image(listofikan.get(i)->getImage(), listofikan.get(i)->getX(), listofikan.get(i)->getY()-24);
-        }
-
-        for(int i = 0; i < listofmakananikan.getSize(); i++) {
-            draw_image(listofmakananikan.getRef(i)->getImage(), listofmakananikan.get(i).getX(), listofmakananikan.get(i).getY()-24);
-        }
-
-        for(int i = 0; i < listofkoin.getSize(); i++) {
-            draw_image(listofkoin.getRef(i)->getImage(), listofkoin.get(i).getX(), listofkoin.get(i).getY()-24);
-        }
-
-        draw_image(siput.getImage(), siput.getX(), siput.getY()-24);
-
-        draw_text("Koin Player : " +  std::to_string(habibi.getKoin()), 18, 10, 50, 0, 0, 0);
-        update_screen();
     }
 
     close();

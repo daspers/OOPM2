@@ -29,6 +29,7 @@ class Ikan : public BendaAkuarium {
 		Posisi pointtujuan;
 		static int banyakikan;
 		string image;
+		double wakturandom;
 
 	public :
 	//ctor tanpa parameter dengan kondisi default yang akan didefenisikan kedepannya
@@ -58,6 +59,8 @@ class Ikan : public BendaAkuarium {
 	//Mengembalikan waktu yang dibutuhkan sampai mati karena kelaparan
 	int getHunger() const;
 	
+	double getWaktuRandom() const;
+
 	//Mengembalikan nilai point tujuan sebuah ikan
     Posisi getPointTujuan() const;
 	
@@ -78,6 +81,8 @@ class Ikan : public BendaAkuarium {
     //Prosedur untuk mengubah point tujuan dari ikan
     void setPointTujuan(Posisi x);
 	
+    void setWaktuRandom(double x);
+
     void setImage(string x);
 
     bool mati();

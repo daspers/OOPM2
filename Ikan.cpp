@@ -57,6 +57,10 @@ int Ikan::getHunger() const {
 	return this->hunger;
 }
 
+double Ikan::getWaktuRandom() const {
+	return wakturandom;
+}
+
 //Mengembalikan nilai point tujuan sebuah ikan
 Posisi Ikan::getPointTujuan() const {
 	return this->pointtujuan;
@@ -89,6 +93,10 @@ void Ikan::setWaktuMakan(int x) {
 //Prosedur untuk mengubah point tujuan dari ikan
 void Ikan::setPointTujuan(Posisi x) {
 	pointtujuan = x;
+}
+
+void Ikan::setWaktuRandom(double x) {
+	wakturandom = x;
 }
 
 void Ikan::setImage(string x){

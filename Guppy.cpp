@@ -72,6 +72,11 @@ bool Guppy::keluarkanKoinGuppy() {
 }
 
 void Guppy::gerak() {
+	if (time_since_start() - this->getWaktuRandom() >= 3) {
+		Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
+    	this->setPointTujuan(tujuan);
+    	this->setWaktuRandom(time_since_start());
+    }
 	this->setArah(atan2(this->getPointTujuan().getY()-this->getY(), this->getPointTujuan().getX()-this->getX()));
     if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
         this->setImage(Guppy::daftargambar[this->getLevel()-1][1]);

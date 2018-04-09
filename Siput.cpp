@@ -62,11 +62,42 @@ void Siput::gerak(){
 //Untuk mencari koin terdekat dari posisi siput
 int Siput::cariKoin(List<Koin>& listkoin){
   bool kanansiput = true;
+  bool ketemudasar = false;
+  int terdekat = -1;
+
+  Posisi tujuan(this->getX(), this->getY());
 
   Posisi now(this->getX(), this->getY());
 
-  int terdekat = listkoin.cariIndeksTerdekat(now);
-  
+  for(int i = 0; i < listkoin.getSize() && !ketemudasar; i++) {
+    if (abs(listkoin.getRef(i)->getY() - SCREEN_HEIGHT) < 1) {
+      ketemudasar = true;
+    }
+  }
+
+  if (ketemudasar) {
+    tujuan.setX(99999);
+    tujuan.setY(SCREEN_HEIGHT);
+    for(int i = 0; i < listkoin.getSize(); i++) {
+      if (abs(listkoin.getRef(i)->getY() - SCREEN_HEIGHT) < 1) {
+        if (abs(now.getX() - listkoin.getRef(i)->getX()) < abs(now.getX() - tujuan.getX())) {
+          terdekat = i;
+          tujuan.setX(listkoin.getRef(i)->getX());
+        }
+      }   
+    }
+  } else {
+    tujuan.setX(this->getX());
+    tujuan.setY(0);
+    for(int i = 0; i < listkoin.getSize(); i++) {
+      if (listkoin.getRef(i)->getY() > tujuan.getY()) {
+        terdekat = i;
+        tujuan.setX(listkoin.getRef(i)->getX());
+        tujuan.setY(listkoin.getRef(i)->getY());
+      }
+    }
+  }
+
   if (terdekat != -1) {
     this->setArah(atan2(listkoin.getRef(terdekat)->getY() - this->getY(), listkoin.getRef(terdekat)->getX() - this->getX()));
     if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
@@ -84,5 +115,6 @@ int Siput::cariKoin(List<Koin>& listkoin){
           return terdekat;
       }
   }
+
   return -1;
 }

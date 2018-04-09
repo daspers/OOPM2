@@ -24,6 +24,10 @@ void Player::tambahKoin(int koin){
 	jumlahkoin+=koin;
 }
 
+void Player::kurangkanKoin(int koin) {
+	jumlahkoin-=koin;
+}
+
 void Player::setKoin(int x) {
 	jumlahkoin = x;
 }

@@ -50,9 +50,10 @@ bool Piranha::keluarkanCoinPiranha(List<Koin>& listkoi){
 
 //Fungsi yang membuat ikan bergerak ke suatu tempat
 void Piranha::gerak(){
-
-	if (int(time_since_start())%5 == 0 ) {
-    	this->setArah(atan2(this->getPointTujuan().getY()-this->getY(), this->getPointTujuan().getX()-this->getX()));
+	if (time_since_start() - this->getWaktuRandom() >= 3) {
+		Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
+    	this->setPointTujuan(tujuan);
+    	this->setWaktuRandom(time_since_start());
     }
 	
     if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
@@ -60,9 +61,9 @@ void Piranha::gerak(){
     } else {
         this->setImage(Piranha::daftargambar[0]);
     }
+
     this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
     this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
-    cout << this->getX() << " " << this->getPointTujuan().getX() << " " << this->getY() << " " << this->getPointTujuan().getY() << "\n";
     if (abs(this->getX() - this->getPointTujuan().getX()) < 1 && abs(this->getY() - this->getPointTujuan().getY()) < 1) {
     	Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
     	this->setPointTujuan(tujuan);

@@ -13,7 +13,7 @@ l#ifndef AKUARIUM_HPP
 class Akuarium{
 	private:
   		const int panjang, lebar; //Ukuran dari akuarium
-    	List<Ikan> ikan; //Menyimpan ikan yang ada pada akuarium
+    	List<Ikan*> ikan; //Menyimpan ikan yang ada pada akuarium
     	List<MakananIkan> makananikan; //Menyimpan makanan ikan yang ada pada akuarium
   		List<Koin> koin; //Menyimpan koin yang ada pada akuarium
     	Siput siput; //Menyimpan siput yang ada pada akuarium
@@ -35,7 +35,7 @@ class Akuarium{
 		//Mengembalikan lebar akuarium
 	    int getLebar() const;
 		//Mengembalikan list ikan
-	    List<Ikan> getListIkan() const;
+	    List<Ikan*> getListIkan() const;
 		//Mengembalikan list makanan ikan
 	    List<MakananIkan> getListMakananIkan() const;
 	    //Mengembalikan list koin
