@@ -10,8 +10,6 @@ class Piranha : public Ikan {
 //Kelas piranha merupakan derived class dari ikan yang pada dasarnya dapat bergerak dan makan. 
 //Kelas ini memiliki atribut statik jumlahpiranha untuk mengembalikan jumlah objek  piranha
 	private :
-		const int waktukeluarkankoin;
-        double waktukoin;
         static string daftargambar[4]; 
 	public :
 		//ctor memanggil ctor Ikan dan menambah jumlahpiranha
@@ -25,14 +23,6 @@ class Piranha : public Ikan {
 		
 		//operator overloading =
 		Piranha& operator=(const Piranha&);
-		
-		//method
-		//Fungsi yang menambahkan koin ke List<Koin>
-		int getWaktuKeluarkanKoin() const; //Untuk mengembalikan nilai waktu koin turun
-        
-        double getWaktuKoin() const; //Untuk mengembalikan nilai waktu produksi
-        
-        bool keluarkanCoinPiranha(List<Koin>&);
 		
 		//Fungsi yang membuat ikan bergerak ke suatu tempat
 		void gerak();
