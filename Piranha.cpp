@@ -5,14 +5,13 @@ string Piranha::daftargambar[4] = {"piranhakiri.png", "piranhakanan.png", "piran
 using namespace std;
 
 //ctor memanggil ctor Ikan dan menambah jumlahpiranha
-Piranha::Piranha(double x, double y, double arah, double kecepatan): Ikan(x, y, arah, kecepatan, "Piranha"), waktukeluarkankoin(5) {
+Piranha::Piranha(double x, double y, double arah, double kecepatan): Ikan(x, y, arah, kecepatan, "Piranha"){
 	this->setImage("piranhakiri.png");
 	this->setLapar(false);
 }
 
 //cctor mengkopi piranha
-Piranha::Piranha(const Piranha& other): Ikan(other.getX(), other.getY(), other.getArah(), other.getKecepatan(), other.getType()), waktukeluarkankoin(5) {
-	 this->waktukoin = time_since_start();
+Piranha::Piranha(const Piranha& other): Ikan(other.getX(), other.getY(), other.getArah(), other.getKecepatan(), other.getType()){
 }
 
 //dtor mengubah jumlah piranha
@@ -28,26 +27,6 @@ Piranha& Piranha::operator=(const Piranha& other){
 	this->setKecepatan(other.getKecepatan());
 }
 
-//getter
- int Piranha::getWaktuKeluarkanKoin() const{
- 	return waktukeluarkankoin;
- } //Untuk mengembalikan nilai waktu koin turun
- double Piranha::getWaktuKoin() const{
- 	return waktukoin;
- } //Untuk mengembalikan nilai waktu produksi
-
-//method
-//Fungsi yang menambahkan koin ke List<Koin>
-bool Piranha::keluarkanCoinPiranha(List<Koin>& listkoi){
-	double wk = this->getWaktuKoin();
-	int wkk = this->getWaktuKeluarkanKoin();
-	if (time_since_start() - wk >= wkk) {
-		waktukoin = time_since_start();
-		return true;
-	}
-	return false;
-} 
-
 //Fungsi yang membuat ikan bergerak ke suatu tempat
 void Piranha::gerak(){
 	if (time_since_start() - this->getWaktuRandom() >= 3) {
@@ -55,13 +34,12 @@ void Piranha::gerak(){
     	this->setPointTujuan(tujuan);
     	this->setWaktuRandom(time_since_start());
     }
-	
+	this->setArah(atan2(this->getPointTujuan().getY()-this->getY(), this->getPointTujuan().getX()-this->getX()));
     if (this->getArah()*180/PI > -90 && this->getArah()*180/PI < 90) {
         this->setImage(Piranha::daftargambar[1]);
     } else {
         this->setImage(Piranha::daftargambar[0]);
     }
-
     this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
     this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
     if (abs(this->getX() - this->getPointTujuan().getX()) < 1 && abs(this->getY() - this->getPointTujuan().getY()) < 1) {
