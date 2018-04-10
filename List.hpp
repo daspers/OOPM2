@@ -32,7 +32,7 @@ public :
 	List(const List&); // meng-copy semua elemen list L
 	//dtor
 	~List(); // menghapus semua yang di alokasi di List
-	
+
 	//method lain-lain
 	int find(const T&) const; // mencari indeks dimana elemen yang dicari berada, -1 jika tidak ada
 	bool isEmpty() const; // mengeluarkan true jika node==NULL
@@ -98,8 +98,8 @@ template<class T>
 List<T>::List(const List& L){
 	Node<T>* nl = L.node;
   while(nl!=NULL){
-  	add(nl.getVal());
-    nl = nl.getNext();
+  	add(nl->getVal());
+    nl = nl->getNext();
   }
   size = L.getSize();
 }
