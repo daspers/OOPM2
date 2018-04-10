@@ -16,6 +16,7 @@ class Siput : public BendaAkuarium {
       string image;
   public :
     //Ctor 
+    Siput();
     Siput(double x, double y, double a, double kecepatan);
     
     //Cctor

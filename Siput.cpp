@@ -1,5 +1,11 @@
 #include "Siput.hpp"
 
+Siput::Siput() : BendaAkuarium(rand()%SCREEN_WIDTH, SCREEN_HEIGHT, 0,500) {
+  pointtujuan.setX(rand()%SCREEN_WIDTH);
+  pointtujuan.setY(rand()%SCREEN_HEIGHT);
+  image = "siputkanan.png";
+}
+
 Siput::Siput(double x, double y, double a, double kecepatan):BendaAkuarium(x, y, a, kecepatan){
   pointtujuan.setX(rand()%SCREEN_WIDTH);
   pointtujuan.setY(rand()%SCREEN_HEIGHT);
