@@ -1,12 +1,21 @@
 #ifndef AKUARIUM_HPP
 #define AKUARIUM_HPP
 
-#include "List.hpp"
+#include "oop.hpp"
+#include <iostream>
+#include <math.h>
+#include <sstream>
+#include <string>
 #include "Ikan.hpp"
-// #include "MakananIkan.hpp"
-// #include "Koin.hpp"
+#include "List.hpp"
+#include "Player.hpp"
+#include "MakananIkan.hpp"
+#include "Koin.hpp"
 #include "Siput.hpp"
-// #include "BendaAkuarium.hpp"
+#include "Guppy.hpp"
+#include "Piranha.hpp"
+
+using namespace std;
 
 //Kelas Akuarium adalah kelas yang mempunyai relasi has-a yang mana mempunyai atribut berupa objek-objek yang ada
 
@@ -14,8 +23,8 @@ class Akuarium{
 	private:
   		const int tinggi, lebar; //Ukuran dari akuarium
     	List<Ikan*> ikan; //Menyimpan ikan yang ada pada akuarium
-    // 	List<MakananIkan> makananikan; //Menyimpan makanan ikan yang ada pada akuarium
-  		// List<Koin> koin; //Menyimpan koin yang ada pada akuarium
+    	List<MakananIkan> makananikan; //Menyimpan makanan ikan yang ada pada akuarium
+  		List<Koin> koin; //Menyimpan koin yang ada pada akuarium
     	Siput siput; //Menyimpan siput yang ada pada akuarium
 	public:
 		//ctor tanpa parameter dengan default size yang akan dideskripsikan dikemudian hari
@@ -35,18 +44,26 @@ class Akuarium{
 	    int getLebar() const;
 		
 		//Mengembalikan list ikan
-	    List<Ikan*> getListIkan() const;
-		// //Mengembalikan list makanan ikan
-	 //    List<MakananIkan> getListMakananIkan() const;
-	 //    //Mengembalikan list koin
-		// List<Koin> getListKoin() const;
+	    List<Ikan*>& getListIkan();
+		
+		//Mengembalikan list makanan ikan
+	    List<MakananIkan>& getListMakananIkan();
 	    
-		// //prosedur untuk mengupdate isi dari aquarium
-	 //    void updateIsi();
-		// //prosedur untuk menggambarkan petak akuarium
-	 //    void gambarAkuarium();
-		// //prosedur untuk memunculkan benda akuarium secara random
-	 //    void spawnItem();
+	    //Mengembalikan list koin
+		List<Koin>& getListKoin();
+	   	
+		Siput getSiput() const;
+
+		void tambahikan(Ikan*);
+
+		void tambahmakananikan(MakananIkan);
+
+		void tambahkoin(Koin);
+
+		void gerak();
+
+		void gambarAkuarium(Player);
 };
+
 
 #endif
