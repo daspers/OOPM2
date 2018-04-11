@@ -195,7 +195,7 @@ void List<T>::remove(const T& tval){
 template<class T>
 void List<T>::removeIdx(int idx){
 	size--;
-	Node<T> *temp = node, *prev = NULL;
+	Node<T> *temp = node;
 	if(idx==0){
 		node = node->getNext();
 		delete temp;

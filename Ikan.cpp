@@ -111,14 +111,26 @@ bool Ikan::mati() {
 }
 
 //virtual method Piranha
-int Ikan::cariIkanTerdekat(List<Ikan*>&) {}
+int Ikan::cariIkanTerdekat(List<Ikan*>&) {
+	return 0;
+}
 
 //virtual method Guppy
-int Ikan::cariMakanGuppy(List<MakananIkan>& listmakananikan) {}
-bool Ikan::keluarkanKoinGuppy() {}
-double Ikan::getWaktuKoin() const {}
-int Ikan::getLevel() const {}
-int Ikan::getJumlahMakanYangDimakan() const {}
+int Ikan::cariMakanGuppy(List<MakananIkan>& listmakananikan) {
+	return 0;
+}
+bool Ikan::keluarkanKoinGuppy() {
+	return false;
+}
+double Ikan::getWaktuKoin() const {
+	return 0.0f;
+}
+int Ikan::getLevel() const {
+	return 0;
+}
+int Ikan::getJumlahMakanYangDimakan() const {
+	return 0;
+}
 
 void Ikan::setLevel(int) {}
 void Ikan::setJumlahMakanYangDimakan(int) {}

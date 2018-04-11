@@ -17,7 +17,9 @@ Akuarium::Akuarium(const Akuarium& other) : lebar(other.getLebar()), tinggi(othe
 Akuarium::~Akuarium() {}
 
 //operator overloading untuk assignment
-Akuarium& Akuarium::operator=(const Akuarium&) {}
+Akuarium& Akuarium::operator=(const Akuarium&) {
+    return *this;
+}
 
 //Mengembalikan panjang akuarium
 int Akuarium::getTinggi() const {
