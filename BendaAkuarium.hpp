@@ -7,7 +7,7 @@
 class BendaAkuarium : public Movement, public Posisi {
 //Kelas Benda Akuarium ialah benda yang dapat berada pada aquarium
 	public :
-		BendaAkuarium(double x, double y, double arah, double kecepatan):Posisi(x, y), Movement(arah, kecepatan){};
+		BendaAkuarium(double x, double y, double arah, double kecepatan): Movement(arah, kecepatan), Posisi(x, y){};
     	virtual void gerak() = 0; //Prosedur ketika sebuah benda aquarium bergerak
 };
 
