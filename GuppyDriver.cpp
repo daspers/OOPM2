@@ -2,7 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include <sstream>
-#include "List.h"
+#include "List.hpp"
 #include "Ikan.hpp"
 #include "Guppy.hpp"
 
@@ -14,7 +14,7 @@ int main(){
     cout<< "Masukkan absis dari ikan guppy : (0-640) \n";
     cin>>gx;
 
-    cout<< "Masukkan ordinat dari siput guppy : (0-853) \n"
+    cout<< "Masukkan ordinat dari siput guppy : (0-853) \n";
     cin>>gy;
 
     //test ctor
@@ -39,7 +39,6 @@ int main(){
     cin>> fy;
 
     Posisi feed(fx,fy);
-    guppy.makan(feed);
 
     cout<<"Guppy telah memakan "<< guppy.getJumlahMakanYangDimakan()<<" makanan"<<endl;
     guppy.cekLevel();
@@ -47,13 +46,13 @@ int main(){
     cout<<"Guppy harus makan "<<Guppy::getMakananNaikLevel(1)<<" makanan untuk naik level"<<endl;
 
 
-    Guppy guppysama = guppy
-    void setJumlahMakanYangDimakan(Guppy::getMakananNaikLevel(1));
+    Guppy guppysama = guppy;
+    guppysama.setJumlahMakanYangDimakan(Guppy::getMakananNaikLevel(1));
     guppysama.setLevel(2);
     cout<<"Ada guppy yang sama dengan guppy pertama dengan level 2"<<endl;
     cout<<"Makanan yang guppy tersebut makan yaitu sejumlah "<< guppysama.getJumlahMakanYangDimakan()<<endl;
 
-    guppy.gerak()
+    guppy.gerak();
     cout <<"Guppy telah bergerak"<<endl;
     cout <<"posisi guppy sekarang ada di poin ("<<guppy.getX()<<","<<guppy.getY()<<")"<<endl;
     
