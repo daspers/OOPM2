@@ -2,7 +2,7 @@
 
 int Ikan::banyakikan = 0;
 
-Ikan::Ikan(double x, double y, double arah, double kecepatan, string type) : BendaAkuarium(x, y, arah, kecepatan), tahankenyang(5), hunger(10) {
+Ikan::Ikan(double x, double y, double arah, double kecepatan, string type) : BendaAkuarium(x, y, arah, kecepatan) {
 	lapar = false;
 	waktumakan = 0;
 	banyakikan++;
@@ -11,7 +11,7 @@ Ikan::Ikan(double x, double y, double arah, double kecepatan, string type) : Ben
 	waktumakan = time_since_start();
 }
 
-Ikan::Ikan(const Ikan& other) : BendaAkuarium(other.getX(), other.getY(), other.getArah(), other.getKecepatan()), tahankenyang(5), hunger(10) {
+Ikan::Ikan(const Ikan& other) : BendaAkuarium(other.getX(), other.getY(), other.getArah(), other.getKecepatan()){
 	this->lapar = other.getLapar();
 	this->waktumakan = other.getWaktuMakan();
 }

@@ -21,9 +21,9 @@ using namespace std;
 class Ikan : public BendaAkuarium {
 	private :
 	    bool lapar;
-	    const int tahankenyang; //Waktu untuk berapa lama dia kenyang
+	    static const int tahankenyang = 9; //Waktu untuk berapa lama dia kenyang
 	  	int waktumakan;
-	    const int hunger; //Waktu untuk menahan lapar
+	    static const int hunger = 15; //Waktu untuk menahan lapar
 	    string type;
 		Posisi pointtujuan;
 		static int banyakikan;
