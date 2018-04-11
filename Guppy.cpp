@@ -47,6 +47,7 @@ Guppy& Guppy::operator=(const Guppy& other) {
 	this->setKecepatan(other.getKecepatan());
 	this->setLevel(other.getLevel());	
 	this->setJumlahMakanYangDimakan(other.getJumlahMakanYangDimakan());
+	return *this;
 }
 
 void Guppy::cekLevel() {

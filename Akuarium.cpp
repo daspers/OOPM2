@@ -5,11 +5,11 @@ Akuarium::Akuarium() : tinggi(0), lebar(0) {
 }
 
 //ctor dengan parameter panjang dan lebar
-Akuarium::Akuarium(int x,int y) : lebar(x), tinggi(y) {
+Akuarium::Akuarium(int x,int y) : tinggi(y), lebar(x){
 }
 
 //cctor
-Akuarium::Akuarium(const Akuarium& other) : lebar(other.getLebar()), tinggi(other.getTinggi()) {
+Akuarium::Akuarium(const Akuarium& other) : tinggi(other.getTinggi()), lebar(other.getLebar()) {
 
 }
 

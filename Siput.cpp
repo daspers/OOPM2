@@ -50,7 +50,6 @@ void Siput::setPointTujuan(Posisi point){
 //implementasi method gerak siput
 void Siput::gerak(){
       bool kanansiput = true;
-      double a;
 
       if ((pointtujuan.getX()-this->getX())>0) {
           kanansiput = true;

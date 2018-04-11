@@ -21,6 +21,7 @@ Ikan& Ikan::operator=(const Ikan& other) {
 	this->setY(other.getY());
 	this->setArah(other.getArah());
 	this->setKecepatan(other.getKecepatan());
+	return *this;
 }
 
 //Mengembalikan kondisi ikan lapar menjadi true else false

@@ -20,6 +20,7 @@ Piranha& Piranha::operator=(const Piranha& other){
 	this->setY(other.getY());
 	this->setArah(other.getArah());
 	this->setKecepatan(other.getKecepatan());
+	return *this;
 }
 
 //Fungsi yang membuat ikan bergerak ke suatu tempat
