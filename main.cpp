@@ -38,14 +38,6 @@ vector<string> split(const string &s, char delim) {
 int main( int argc, char* args[] )
 {
     init();
-    
-    double a = 30;
-    bool sampai = false;
-    int asalx = 0;
-    int asaly = 0;
-    bool kanan = true;
-
-    int banyak = 0;
 
     // Menghitung FPS
     int frames_passed = 0;
@@ -55,14 +47,7 @@ int main( int argc, char* args[] )
     Player habibi;
     Akuarium arkavkuarium;
 
-    // Posisi ikan
-    double cy = SCREEN_HEIGHT / 2;
-    double cx = SCREEN_WIDTH / 2;
-
     bool running = true;
-    double prevtime = time_since_start();
-    int detiknow = 0;
-    int loop = 0;
     
     bool mainmenu = true;
     bool menang= false;
@@ -71,9 +56,7 @@ int main( int argc, char* args[] )
 
     while (running) {
         double now = time_since_start();
-        double sec_since_last = now - prevtime;
-        prevtime = now;
-
+        
         handle_input();
         if (quit_pressed()) {
             running = false;
@@ -204,6 +187,7 @@ int main( int argc, char* args[] )
             for (auto key : get_clicked_mouse()) {
                 switch(key) {
                     case 1: {
+                        cout << get_clicked_mouseX() << " " << get_clicked_mouseY() << "\n";
                         int ketemu = -1;
                         for(int i = 0; i < arkavkuarium.getListKoin().getSize() && ketemu == -1; i++) {
                             if (abs(arkavkuarium.getListKoin().getRef(i)->getX() - get_clicked_mouseX()) < 40 && abs(arkavkuarium.getListKoin().getRef(i)->getY() - get_clicked_mouseY()-100) < 40) {
@@ -214,19 +198,25 @@ int main( int argc, char* args[] )
                             habibi.tambahKoin(arkavkuarium.getListKoin().getRef(ketemu)->getNilai());
                             arkavkuarium.getListKoin().removeIdx(ketemu);
                         } else {
-                            if (((get_clicked_mouseX() > 753 || get_clicked_mouseX() < 683)) || ((get_clicked_mouseY() > 135 || get_clicked_mouseY() < 65))){
-                                if (habibi.getKoin() < 5) {
+                            if ((get_clicked_mouseX() <= 107 && get_clicked_mouseX() >= 48) && (get_clicked_mouseY() <= 66 && get_clicked_mouseY() >= 23)) {
+                                if (habibi.getKoin() < 100) {
                                     kurangkoin = true;
                                 } else {
-                                    MakananIkan newmakananikan(get_clicked_mouseX(), get_clicked_mouseY()+100);
-                                    arkavkuarium.tambahmakananikan(newmakananikan);
-                                    habibi.kurangkanKoin(5);   
+                                    Ikan* newguppy = new Guppy(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 2000);
+                                    arkavkuarium.tambahikan(newguppy);
+                                    habibi.kurangkanKoin(100);
                                     kurangkoin = false;
                                 }
-                            }
-                        }
-                        if (!menang){
-                            if ((get_clicked_mouseX() <= 753 && get_clicked_mouseX() >= 683) && (get_clicked_mouseY() <= 135 && get_clicked_mouseY() >= 65)) {
+                            } else if ((get_clicked_mouseX() <= 221 && get_clicked_mouseX() >= 160) && (get_clicked_mouseY() <= 69 && get_clicked_mouseY() >= 18)) {
+                                if (habibi.getKoin() < 200) {
+                                    kurangkoin = true;
+                                } else {
+                                    Ikan* newpiranha = new Piranha(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 4000);
+                                    arkavkuarium.tambahikan(newpiranha);
+                                    habibi.kurangkanKoin(200);
+                                    kurangkoin = false;
+                                } 
+                            } else if ((get_clicked_mouseX() <= 676 && get_clicked_mouseX() >= 614) && (get_clicked_mouseY() <= 67 && get_clicked_mouseY() >= 18)) {
                                 if (habibi.getKoin() < 500) {
                                     kurangkoin = true;
                                 } else {
@@ -237,7 +227,16 @@ int main( int argc, char* args[] )
                                     }
                                     kurangkoin = false;
                                 }
-                            }
+                            } else if (((get_clicked_mouseX() > 753 || get_clicked_mouseX() < 683)) || ((get_clicked_mouseY() > 135 || get_clicked_mouseY() < 65))){
+                                if (habibi.getKoin() < 5) {
+                                    kurangkoin = true;
+                                } else {
+                                    MakananIkan newmakananikan(get_clicked_mouseX(), get_clicked_mouseY()+100);
+                                    arkavkuarium.tambahmakananikan(newmakananikan);
+                                    habibi.kurangkanKoin(5);   
+                                    kurangkoin = false;
+                                }
+                            } 
                         }
                         get_clicked_mouse().erase(1);
                         break;
@@ -248,12 +247,6 @@ int main( int argc, char* args[] )
             // Proses masukan yang bersifat "tombol"
             for (auto key : get_tapped_keys()) {
                 switch (key) {
-                // r untuk reset
-                    case SDLK_r: {
-                        cy = SCREEN_HEIGHT / 2;
-                        cx = SCREEN_WIDTH / 2;
-                        break;
-                    }
                     // x untuk keluar
                     case SDLK_x: {
                         running = false;
