@@ -1,3 +1,0 @@
-arah gerakan pertama: 0, kecepatan gerakan pertama: 0
-arah gerakan kedua: 2, kecepatan gerakan kedua: 10
-arah gerakan ketiga: 2, kecepatan gerakan ketiga: 10

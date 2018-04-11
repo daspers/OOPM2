@@ -1,3 +1,0 @@
-Absis P:0, Ordinat P:0
-Absis Q:4, Ordinat Q: 3
-Jarak dari P dan Q adalah 5 satuan
