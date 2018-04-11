@@ -26,7 +26,6 @@ class Ikan : public BendaAkuarium {
 	    static const int hunger = 15; //Waktu untuk menahan lapar
 	    string type;
 		Posisi pointtujuan;
-		static int banyakikan;
 		string image;
 		double wakturandom;
 

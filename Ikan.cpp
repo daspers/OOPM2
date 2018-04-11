@@ -1,11 +1,8 @@
 #include "Ikan.hpp"
 
-int Ikan::banyakikan = 0;
-
 Ikan::Ikan(double x, double y, double arah, double kecepatan, string type) : BendaAkuarium(x, y, arah, kecepatan) {
 	lapar = false;
 	waktumakan = 0;
-	banyakikan++;
 	image = "ikankiri.gif";
 	this->type = type;
 	waktumakan = time_since_start();
