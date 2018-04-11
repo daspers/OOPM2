@@ -161,6 +161,7 @@ void List<T>::add(const T& tval){
 
 template<class T>
 void List<T>::addFirst(const T& tval){
+	size++;
 	if(node == NULL){
 		node = new Node<T>(tval);
 		return;
@@ -172,11 +173,11 @@ void List<T>::addFirst(const T& tval){
 
 template<class T>
 void List<T>::remove(const T& tval){
-	size--;
 	Node<T> *temp = node;
 	if(temp==NULL){
 		return;
 	}
+	size--;
 	if(temp->getVal() == tval){
 		node = node->getNext();
 		delete temp;
@@ -194,10 +195,10 @@ void List<T>::remove(const T& tval){
 
 template<class T>
 void List<T>::removeIdx(int idx){
-	size--;
 	Node<T> *temp = node;
 	if(idx==0){
 		node = node->getNext();
+		size--;
 		delete temp;
 		return;
 	}
@@ -206,6 +207,7 @@ void List<T>::removeIdx(int idx){
 		idx--;
 	}
 	if(temp->getNext() != NULL){
+		size--;
 		Node<T> *del = temp->getNext();
 		temp->setNext(del->getNext());
 		delete del;
@@ -217,6 +219,7 @@ T List<T>::delFirst(){
 	T a = node->getVal();
 	Node<T>* del = node;
 	node = node->getNext();
+	size--;
 	delete del;
 	return a;
 }
@@ -227,6 +230,7 @@ T List<T>::delLast(){
 		T a = node->getVal();
 		delete node;
 		node = NULL;
+		size--;
 		return a;
 	}
 	Node<T>* del = node;
@@ -237,6 +241,7 @@ T List<T>::delLast(){
 	T a = ndel->getVal();
 	delete ndel;
 	del->setNext(NULL);
+	size--;
 	return a;
 }
 
