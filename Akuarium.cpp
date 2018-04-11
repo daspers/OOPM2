@@ -131,7 +131,7 @@ void Akuarium::gerak() {
 
 void Akuarium::gambarAkuarium(Player habibi, bool kurangkoin) {
 	draw_image("Aquarium6.jpg", SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-            draw_text("Panah untuk bergerak, r untuk reset, x untuk keluar", 18, 10, 10, 0, 0, 0);
+    draw_image("tabatas.png", SCREEN_WIDTH/2, 111/2);
 	for(int i = 0; i < ikan.getSize(); i++) {
         draw_image(ikan.get(i)->getImage(), ikan.get(i)->getX(), ikan.get(i)->getY()-100);
     }
@@ -145,20 +145,22 @@ void Akuarium::gambarAkuarium(Player habibi, bool kurangkoin) {
     }
 
     if (habibi.getBanyakTelur()==0){
-        draw_image("telor1.png",718,100);
+        draw_image("telor1.png",645,45);
     }else if (habibi.getBanyakTelur()==1){
-        draw_image("telor2.png",718,100);
+        draw_image("telor2.png",645,45);
     }else{
-        draw_image("telor3.png",718,100);
+        draw_image("telor3.png",645,45);
     }
     draw_image(siput.getImage(), siput.getX(), siput.getY()-100);
-	if (kurangkoin) {
-        draw_text("Koin Player : " +  std::to_string(habibi.getKoin()), 18, 10, 50, 255, 0, 0);
+    draw_text("100", 18, 60, 76, 255, 255, 255);
+    draw_text("200", 18, 174, 76, 255, 255, 255);
+    draw_text("500", 18, 631, 76, 255, 255, 255);
+    if (kurangkoin) {
+        draw_text(std::to_string(habibi.getKoin()), 18, 752, 76, 255, 0, 0);
     } else {
-        draw_text("Koin Player : " +  std::to_string(habibi.getKoin()), 18, 10, 50, 0, 0, 0);
+        draw_text(std::to_string(habibi.getKoin()), 18, 752, 76, 255, 255, 255);
     }
-    draw_text("Banyak telur: " + std::to_string(habibi.getBanyakTelur()),18,10,100,0,0,0);
-}
+}   
 // //prosedur untuk mengupdate isi dari aquarium
 // void Akuarium::updateIsi();
 // //prosedur untuk menggambarkan petak akuarium
