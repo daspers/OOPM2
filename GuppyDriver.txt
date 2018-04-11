@@ -1,0 +1,24 @@
+Masukkan absis dari ikan guppy : (0-640) 
+300
+Masukkan ordinat dari siput guppy : (0-853) 
+200
+ Ikan guppy copy telah dibuat dengan x= 300 dan y=200
+Waktu keluarkan koin : 5
+Range waktu koin keluar :3.42723
+Level guppy sekarang :1
+Guppy ingin makan
+Masukkan posisi x makanan
+20
+Masukkan posisi y makanan
+30
+Guppy telah memakan 0 makanan
+Level guppy :1
+Guppy harus makan 5 makanan untuk naik level
+Ada guppy yang sama dengan guppy pertama dengan level 2
+Makanan yang guppy tersebut makan yaitu sejumlah 5
+Guppy telah bergerak
+posisi guppy sekarang ada di poin (300.005,200)
+Guppy ingin makan, masukkan 2 absis posisi tujuan makan:
+200,100
+Masukkan 2 ordinat posisi tujuan makan: 
+Guppy mencari makanan ikan yang terdekat yaitu pada indeks : -1

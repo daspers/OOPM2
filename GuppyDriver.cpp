@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <math.h>
 #include <sstream>
@@ -57,7 +56,7 @@ int main(){
     cout <<"posisi guppy sekarang ada di poin ("<<guppy.getX()<<","<<guppy.getY()<<")"<<endl;
     
     double x,x1,y,y1;
-    cout<<"Siput ingin makan, masukkan 2 absis posisi tujuan makan:"<<endl;
+    cout<<"Guppy ingin makan, masukkan 2 absis posisi tujuan makan:"<<endl;
     cin>> x;
     cin>> x1;
     cout<<"Masukkan 2 ordinat posisi tujuan makan: "<<endl;

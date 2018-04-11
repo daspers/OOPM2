@@ -1,6 +1,6 @@
 #include "Siput.hpp"
 
-Siput::Siput() : BendaAkuarium(rand()%SCREEN_WIDTH, SCREEN_HEIGHT, 0,500) {
+Siput::Siput() : BendaAkuarium(rand()%SCREEN_WIDTH, SCREEN_HEIGHT, 0,1000) {
   pointtujuan.setX(rand()%SCREEN_WIDTH);
   pointtujuan.setY(rand()%SCREEN_HEIGHT);
   image = "siputkanan.png";
