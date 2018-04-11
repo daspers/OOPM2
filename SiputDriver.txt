@@ -1,0 +1,16 @@
+masukkan absis dari siput pertama: 
+100
+masukkan ordinat dari siput pertama: 
+460
+masukkan ordinat dari siput pertama: 
+640
+Siput pertama berada pada koordinat (100,640)
+Siput kedua yang berasal dari cctor berada pada koordinat (100,640)
+masukkan absis dari titik tujuan: 
+40
+masukkan ordinat dari titik tujuan: 
+640
+Point tujuan berada pada koordinat (40,640)
+Siput perlu bergerak ke kiri
+
+Siput pertama setelah ke titik tujuan berada pada koordinat (40.095,640)

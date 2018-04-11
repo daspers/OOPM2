@@ -1,0 +1,12 @@
+Pilih absis ikan piranha:
+20
+Pilih ordinat ikan piranha:
+20
+Mau tambah Piranha lagi ngga?(y/n)
+y
+Absis dari piranha pertama adalah 20
+Ordinat dari piranha pertama adalah 20
+Absis dari piranha kedua adalah 20
+Ordinat dari piranha kedua adalah 20
+
+Yeay driver piranha selesai
