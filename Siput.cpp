@@ -76,7 +76,7 @@ int Siput::cariKoin(List<Koin>& listkoin){
   Posisi now(this->getX(), this->getY());
 
   for(int i = 0; i < listkoin.getSize() && !ketemudasar; i++) {
-    if (abs(listkoin.getRef(i)->getY() - SCREEN_HEIGHT) < 1) {
+    if (abs(listkoin.getRef(i)->getY() - SCREEN_HEIGHT-20) < 1) {
       ketemudasar = true;
     }
   }
@@ -85,7 +85,7 @@ int Siput::cariKoin(List<Koin>& listkoin){
     tujuan.setX(99999);
     tujuan.setY(SCREEN_HEIGHT);
     for(int i = 0; i < listkoin.getSize(); i++) {
-      if (abs(listkoin.getRef(i)->getY() - SCREEN_HEIGHT) < 1) {
+      if (abs(listkoin.getRef(i)->getY() - SCREEN_HEIGHT - 20) < 1) {
         if (abs(now.getX() - listkoin.getRef(i)->getX()) < abs(now.getX() - tujuan.getX())) {
           terdekat = i;
           tujuan.setX(listkoin.getRef(i)->getX());
@@ -117,7 +117,7 @@ int Siput::cariKoin(List<Koin>& listkoin){
         this->setX(this->getX() + this->getKecepatan()*0.0001);
       else if ((this->getX()!= 0) && (abs(this->getX()-listkoin.getRef(terdekat)->getX())>0.1))
         this->setX(this->getX() - this->getKecepatan()*0.0001);
-      if (abs(this->getX() - listkoin.getRef(terdekat)->getX()) < 0.1 && abs(this->getY() - listkoin.getRef(terdekat)->getY()) < 0.1) {
+      if (abs(this->getX() - listkoin.getRef(terdekat)->getX()) < 0.1 && abs(listkoin.getRef(terdekat)->getY() - SCREEN_HEIGHT-20) < 1) {
           return terdekat;
       }
   }

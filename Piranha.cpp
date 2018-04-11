@@ -14,11 +14,6 @@ Piranha::Piranha(double x, double y, double arah, double kecepatan): Ikan(x, y, 
 Piranha::Piranha(const Piranha& other): Ikan(other.getX(), other.getY(), other.getArah(), other.getKecepatan(), other.getType()){
 }
 
-//dtor mengubah jumlah piranha
-//Piranha::~Piranha(){
-
-//}
-
 //operator overloading =
 Piranha& Piranha::operator=(const Piranha& other){
 	this->setX(other.getX());
@@ -30,7 +25,7 @@ Piranha& Piranha::operator=(const Piranha& other){
 //Fungsi yang membuat ikan bergerak ke suatu tempat
 void Piranha::gerak(){
 	if (time_since_start() - this->getWaktuRandom() >= 3) {
-		Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
+		Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT+100);
     	this->setPointTujuan(tujuan);
     	this->setWaktuRandom(time_since_start());
     }
@@ -43,7 +38,7 @@ void Piranha::gerak(){
     this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
     this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
     if (abs(this->getX() - this->getPointTujuan().getX()) < 1 && abs(this->getY() - this->getPointTujuan().getY()) < 1) {
-    	Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
+    	Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT+100);
     	this->setPointTujuan(tujuan);
 
     }
@@ -96,7 +91,7 @@ int Piranha::cariIkanTerdekat(List<Ikan*>& listikan){
 	    this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
 	    this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
 	    if (abs(this->getX() - this->getPointTujuan().getX()) < 1 && abs(this->getY() - this->getPointTujuan().getY()) < 1) {
-	        Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
+	        Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT+100);
     		this->setPointTujuan(tujuan);
 	    }
 	}

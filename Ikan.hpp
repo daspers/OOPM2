@@ -25,7 +25,6 @@ class Ikan : public BendaAkuarium {
 	  	int waktumakan;
 	    const int hunger; //Waktu untuk menahan lapar
 	    string type;
-		// const int radiusmakanan; //Waktu 
 		Posisi pointtujuan;
 		static int banyakikan;
 		string image;
@@ -37,9 +36,6 @@ class Ikan : public BendaAkuarium {
 
 	//cctor
     Ikan(const Ikan&);
-	
-	//dtor
-    // ~Ikan();
 	
 	//operator overloading untuk assignment
 	Ikan& operator=(const Ikan&);
@@ -62,7 +58,7 @@ class Ikan : public BendaAkuarium {
 	double getWaktuRandom() const;
 
 	//Mengembalikan nilai point tujuan sebuah ikan
-    Posisi getPointTujuan() const;
+    Posisi& getPointTujuan();
 	
 	//Mengembalikan type ikan apakah guppy atau piranha
     string getType() const;
@@ -89,10 +85,19 @@ class Ikan : public BendaAkuarium {
 
   	//virtual method untuk gerak ikan
 	virtual void gerak();
+
+	//method piranha
+	virtual int cariIkanTerdekat(List<Ikan*>&);
+
+	//method Guppy
 	virtual int cariMakanGuppy(List<MakananIkan>& listmakananikan);
 	virtual bool keluarkanKoinGuppy();
+	virtual double getWaktuKoin() const;
 	virtual int getLevel() const;
-	virtual int cariIkanTerdekat(List<Ikan*>&);
+	virtual int getJumlahMakanYangDimakan() const;
+	virtual void setLevel(int);
+	virtual void setJumlahMakanYangDimakan(int);
+	virtual void setWaktuKoin(double);
 
 	//virtual method untuk ikan makan
 	// virtual void makan();

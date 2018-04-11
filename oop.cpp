@@ -2,18 +2,33 @@
 // wajib. Namun, hal tersebut diperbolehkan.
 #include "oop.hpp"
 
-#include <map>
-#include <iostream>
-#include <chrono>
-
 using namespace std::chrono;
 
 high_resolution_clock::time_point start = high_resolution_clock::now();
 
+double waktuakhir;
+
 double time_since_start()
 {
     high_resolution_clock::time_point now = high_resolution_clock::now();
-        return duration_cast<duration<double>>(now - start).count();
+    return duration_cast<duration<double>>(now - start).count(); 
+}
+
+void setWaktuAkhir(double x) {
+    waktuakhir = x;
+}
+
+double tulis_waktu() {
+    high_resolution_clock::time_point now = high_resolution_clock::now();
+    return duration_cast<duration<double>>(now - start).count(); 
+}
+
+void setStart(high_resolution_clock::time_point x) {
+    start = x;
+}
+
+high_resolution_clock::time_point& getStart() {
+    return start;
 }
 
 SDL_Window* sdlWindow;

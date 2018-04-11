@@ -16,7 +16,6 @@ class MakananIkan : public BendaAkuarium {
   //Kelas Makanan Ikan ialah turunan dari kelas benda akuarium yang menyimpan 
   //nilai nilai yang dimiliki oleh sebuah makanan ikan
   private :
-    static int banyakmakananikan; //Mengembalikan jumlah makanan ikan yang ada pada akuarium
     string image;
   public :
     //Ctor
@@ -35,8 +34,6 @@ class MakananIkan : public BendaAkuarium {
     bool operator!=(const MakananIkan&);
 
     string getImage();
-
-    static int getBanyakMakananIkan();
 };
 
 #endif

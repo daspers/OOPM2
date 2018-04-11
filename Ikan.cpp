@@ -23,20 +23,6 @@ Ikan& Ikan::operator=(const Ikan& other) {
 	this->setKecepatan(other.getKecepatan());
 }
 
-//cctor
-// Ikan::Ikan(const Ikan&);
-
-//dtor
-// Ikan::~Ikan();
-
-//operator overloading untuk assignment
-// Ikan& Ikan::operator=(const Ikan&);
-
-//Mengembalikan koin yang diproduksi oleh ikan
-// Koin Ikan::getProduksi() const {
-// 	return this.produksi;
-// }
-
 //Mengembalikan kondisi ikan lapar menjadi true else false
 bool Ikan::getLapar() const {
 	return this->lapar;
@@ -62,8 +48,8 @@ double Ikan::getWaktuRandom() const {
 }
 
 //Mengembalikan nilai point tujuan sebuah ikan
-Posisi Ikan::getPointTujuan() const {
-	return this->pointtujuan;
+Posisi& Ikan::getPointTujuan(){
+	return pointtujuan;
 }
 
 //Mengembalikan type ikan apakah guppy atau piranha
@@ -74,11 +60,6 @@ string Ikan::getType() const {
 string Ikan::getImage() const {
     return image;
 }
-
-//prosedur untuk mengubah produksi koin dari ikan
-// void Ikan::setProduksi(Koin x) {
-// 	produksi = x;
-// }
 
 //prosedur untuk mengubah kondisi lapar dari ikan
 void Ikan::setLapar(bool x) {
@@ -129,12 +110,20 @@ bool Ikan::mati() {
 	return false;
 }
 
-bool Ikan::keluarkanKoinGuppy(){};
+//virtual method Piranha
+int Ikan::cariIkanTerdekat(List<Ikan*>&) {}
 
-int Ikan::getLevel() const{};
+//virtual method Guppy
+int Ikan::cariMakanGuppy(List<MakananIkan>& listmakananikan) {}
+bool Ikan::keluarkanKoinGuppy() {}
+double Ikan::getWaktuKoin() const {}
+int Ikan::getLevel() const {}
+int Ikan::getJumlahMakanYangDimakan() const {}
 
-int Ikan::cariMakanGuppy(List<MakananIkan>& listmakananikan){}
+void Ikan::setLevel(int) {}
+void Ikan::setJumlahMakanYangDimakan(int) {}
+void Ikan::setWaktuKoin(double) {}
 
-int Ikan::cariIkanTerdekat(List<Ikan*>&){}
+
 //virtual method untuk ikan makan
 // void Ikan::makan();

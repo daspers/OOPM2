@@ -30,6 +30,6 @@ void Koin::setImage(string i) {
 
 //Untuk pergerakan dari sebuah koin
 void Koin::gerak(){
-	if (abs(this->getY() - SCREEN_HEIGHT) > 0.1)
+	if (abs(this->getY() - SCREEN_HEIGHT - 20) > 0.1)
 		this->setY(this->getY() + this->getKecepatan() * 0.01);
 }

@@ -61,6 +61,10 @@ void Guppy::setJumlahMakanYangDimakan(int x) {
 	jumlahmakanyangdimakan = x;
 } //Untuk mengbuah nilai jumlah makan yang sudah dimakan guppy
 
+void Guppy::setWaktuKoin(double x) {
+	waktukoin = x;
+}
+
 bool Guppy::keluarkanKoinGuppy() {
 	double wk = this->getWaktuKoin();
 	int wkk = this->getWaktuKeluarkanKoin();
@@ -73,7 +77,7 @@ bool Guppy::keluarkanKoinGuppy() {
 
 void Guppy::gerak() {
 	if (time_since_start() - this->getWaktuRandom() >= 3) {
-		Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
+		Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT+100);
     	this->setPointTujuan(tujuan);
     	this->setWaktuRandom(time_since_start());
     }
@@ -86,7 +90,7 @@ void Guppy::gerak() {
     this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
     this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
     if (abs(this->getX() - this->getPointTujuan().getX()) < 0.1 && abs(this->getY() - this->getPointTujuan().getY()) < 0.1) {
-    	Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
+    	Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT+100);
     	this->setPointTujuan(tujuan);
     }
     if (int(time_since_start()) - int(this->getWaktuMakan()) == this->getTahanKenyang()) {
@@ -124,7 +128,7 @@ int Guppy::cariMakanGuppy(List<MakananIkan>& listmakananikan) {
 	    this->setX(this->getX() + this->getKecepatan()*cos(this->getArah())*0.0001);
 	    this->setY(this->getY() + this->getKecepatan()*sin(this->getArah())*0.0001);
 	    if (abs(this->getX() - this->getPointTujuan().getX()) < 0.1 && abs(this->getY() - this->getPointTujuan().getY()) < 0.1) {
-	        Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT);
+	        Posisi tujuan(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT+100);
     		this->setPointTujuan(tujuan);
 	    }
 	}

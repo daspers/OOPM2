@@ -52,7 +52,7 @@ class Akuarium{
 	    //Mengembalikan list koin
 		List<Koin>& getListKoin();
 	   	
-		Siput getSiput() const;
+		Siput& getSiput();
 
 		void tambahikan(Ikan*);
 
@@ -62,7 +62,7 @@ class Akuarium{
 
 		void gerak();
 
-		void gambarAkuarium(Player);
+		void gambarAkuarium(Player, bool);
 };
 
 

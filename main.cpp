@@ -1,21 +1,39 @@
-#include "oop.hpp"
 #include <iostream>
 #include <math.h>
 #include <sstream>
 #include <string>
+#include <fstream>
+#include <vector>
 #include "Ikan.hpp"
 #include "List.hpp"
 #include "Player.hpp"
 #include "MakananIkan.hpp"
-#include "Koin.hpp";
-#include "Siput.hpp";
-#include "Guppy.hpp";
-#include "Piranha.hpp";
+#include "Koin.hpp"
+#include "Siput.hpp"
+#include "Guppy.hpp"
+#include "Piranha.hpp"
+#include "Akuarium.hpp"
+#include "oop.hpp"
 
-// using namespace std;
+using namespace std;
+
 #define PI 3.14159265
+#define ikani arkavkuarium.getListIkan().get(i)
+#define mki arkavkuarium.getListMakananIkan().getRef(i)
+#define koini arkavkuarium.getListKoin().getRef(i)
+#define siputs arkavkuarium.getSiput()
 
 const double speed = 50; // pixels per second
+
+vector<string> split(const string &s, char delim) {
+    stringstream ss(s);
+    string item;
+    vector<string> tokens;
+    while (getline(ss, item, delim)) {
+        tokens.push_back(item);
+    }
+    return tokens;
+}
 
 int main( int argc, char* args[] )
 {
@@ -34,12 +52,8 @@ int main( int argc, char* args[] )
     double fpc_start = time_since_start();
     std::string fps_text = "FPS: 0";
 
-    //Kebutuhan
-    List<Ikan*> listofikan;
     Player habibi;
-    List<MakananIkan> listofmakananikan;
-    List<Koin> listofkoin;
-    Siput siput(rand()%SCREEN_WIDTH, SCREEN_HEIGHT, 0,500);
+    Akuarium arkavkuarium;
 
     // Posisi ikan
     double cy = SCREEN_HEIGHT / 2;
@@ -52,6 +66,8 @@ int main( int argc, char* args[] )
     
     bool mainmenu = true;
     bool menang= false;
+    bool kurangkoin = false;
+    bool kalah = false;
 
     while (running) {
         double now = time_since_start();
@@ -63,49 +79,117 @@ int main( int argc, char* args[] )
             running = false;
         }
 
-        // Gerakkan ikan selama tombol panah ditekan
-        // Kecepatan dikalikan dengan perbedaan waktu supaya kecepatan ikan
-        // konstan pada komputer yang berbeda.
-
-        // for (auto key : get_pressed_keys()) {
-        //     switch (key) {
-        //     case SDLK_UP:
-        //         cy -= speed * sec_since_last;
-        //         break;
-        //     case SDLK_DOWN:
-        //         cy += speed * sec_since_last;
-        //         break;
-        //     case SDLK_LEFT:
-        //         cx -= speed * sec_since_last;
-        //         break;
-        //     case SDLK_RIGHT:
-        //         cx += speed * sec_since_last;
-        //         break;
-        //     }
-        // }
-
-        if (mainmenu) {
+        if (kalah) {
+            clear_screen();
+                draw_text("Kamu Kalah", 18, 10, 10, 0, 0, 0);
+            update_screen();
+        } else if (mainmenu) {
             clear_screen();
             for (auto key : get_clicked_mouse()) {
                 switch(key) {
                     case 1: {
-                        cout << get_clicked_mouseX() << " " << get_clicked_mouseY() << "\n";
-                        if ((get_clicked_mouseX() <= 736 && get_clicked_mouseX() >= 498) && (get_clicked_mouseY() <= 145 && get_clicked_mouseY() >= 64)) {
+                        if ((get_clicked_mouseX() <= 770 && get_clicked_mouseX() >= 615) && (get_clicked_mouseY() <= 474 && get_clicked_mouseY() >= 325)) {
                             mainmenu = false;
+                        } else if ((get_clicked_mouseX() <= 637 && get_clicked_mouseX() >= 541) && (get_clicked_mouseY() <= 275 && get_clicked_mouseY() >= 188)) {
+                            ifstream fileikan;
+                            fileikan.open("Ikan.txt");
+
+                            while(!fileikan.eof()) {
+                                string line;
+
+                                getline(fileikan, line);
+                                if (line == "") {
+                                    break;
+                                }
+
+                                vector<string> splitline = split(line, ' ');
+
+                                if (splitline[4] == "Guppy") {
+                                    Ikan* newguppy = new Guppy(stod(splitline[0]), stod(splitline[1]), 0, 2000);
+                                    newguppy->setLapar(stoi(splitline[2]));
+                                    newguppy->setWaktuMakan(stoi(splitline[3]));
+                                    newguppy->getPointTujuan().setX(stoi(splitline[5]));
+                                    newguppy->getPointTujuan().setY(stoi(splitline[6]));
+                                    newguppy->setImage(splitline[7]);
+                                    newguppy->setWaktuRandom(stod(splitline[8]));
+                                    newguppy->setWaktuKoin(stod(splitline[9]));
+                                    newguppy->setLevel(stoi(splitline[10]));
+                                    newguppy->setJumlahMakanYangDimakan(stoi(splitline[11]));
+                                    arkavkuarium.tambahikan(newguppy);
+                                } else {
+                                    Ikan* newpiranha = new Piranha(stod(splitline[0]), stod(splitline[1]), 0, 4000);
+                                    newpiranha->setLapar(stoi(splitline[2]));
+                                    newpiranha->setWaktuMakan(stoi(splitline[3]));
+                                    newpiranha->getPointTujuan().setX(stoi(splitline[5]));
+                                    newpiranha->getPointTujuan().setY(stoi(splitline[6]));
+                                    newpiranha->setImage(splitline[7]);
+                                    newpiranha->setWaktuRandom(stod(splitline[8]));
+                                    arkavkuarium.tambahikan(newpiranha);
+                                }
+                            }
+                            mainmenu = false;
+
+                            ifstream filekoin("Koin.txt");
+                            while(!filekoin.eof()) {
+                                string line;
+
+                                getline(filekoin, line);
+                                if (line == "") {
+                                    break;
+                                }
+
+                                vector<string> splitline = split(line, ' ');
+
+                                Koin newkoin(stod(splitline[0]), stod(splitline[1]), stod(splitline[2]), stoi(splitline[3]), stoi(splitline[4]));
+                                arkavkuarium.tambahkoin(newkoin);
+                            }
+
+                            ifstream filemakananikan("MakananIkan.txt");
+                            while(!filemakananikan.eof()) {
+                                string line;
+
+                                getline(filemakananikan, line);
+                                if (line == "") {
+                                    break;
+                                }
+
+                                vector<string> splitline = split(line, ' ');
+
+                                MakananIkan newmakananikan(stod(splitline[0]), stod(splitline[1]));
+                                arkavkuarium.tambahmakananikan(newmakananikan);
+                            }
+
+                            ifstream filesiput("Siput.txt");
+                            string line;
+                            getline(filesiput, line);
+                            vector<string> splitline = split(line, ' ');
+                            siputs.setX(stod(splitline[0]));
+                            siputs.setY(stod(splitline[1]));
+
+                            ifstream fileplayer("Player.txt");
+                            getline(fileplayer, line);
+                            splitline = split(line, ' ');
+                            habibi.setKoin(stoi(splitline[0]));
+                            habibi.setBanyakTelur(stoi(splitline[1]));
+
+                            fileplayer.close();
+                            filesiput.close();
+                            filemakananikan.close();
+                            filekoin.close();
+                            fileikan.close();
                         }
                         get_clicked_mouse().erase(1);
                     
                         break;
                     }
                 }
-            }    
+            }
             draw_image("mainmenu.png",SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             update_screen(); 
         }else if (menang) {
             for (auto key : get_clicked_mouse()) {
                 switch(key) {
                     case 1: {
-                        cout << get_clicked_mouseX() << " " << get_clicked_mouseY() << "\n";
                         if ((get_clicked_mouseX() <= SCREEN_WIDTH && get_clicked_mouseX() >= 0) && (get_clicked_mouseY() <= SCREEN_HEIGHT && get_clicked_mouseY() >= 0)) {
                             running= false;
                         }
@@ -121,33 +205,41 @@ int main( int argc, char* args[] )
                 switch(key) {
                     case 1: {
                         int ketemu = -1;
-                        for(int i = 0; i < listofkoin.getSize() && ketemu == -1; i++) {
-                            if (abs(listofkoin.getRef(i)->getX() - get_clicked_mouseX()) < 40 && abs(listofkoin.getRef(i)->getY() - get_clicked_mouseY()-24) < 40) {
+                        for(int i = 0; i < arkavkuarium.getListKoin().getSize() && ketemu == -1; i++) {
+                            if (abs(arkavkuarium.getListKoin().getRef(i)->getX() - get_clicked_mouseX()) < 40 && abs(arkavkuarium.getListKoin().getRef(i)->getY() - get_clicked_mouseY()-100) < 40) {
                                 ketemu = i;
                             }
                         }
                         if (ketemu != -1) {
-                            habibi.tambahKoin(listofkoin.getRef(ketemu)->getNilai());
-                            listofkoin.removeIdx(ketemu);
+                            habibi.tambahKoin(arkavkuarium.getListKoin().getRef(ketemu)->getNilai());
+                            arkavkuarium.getListKoin().removeIdx(ketemu);
                         } else {
-                            if (((get_clicked_mouseX() > 753 || get_clicked_mouseX() < 683)) && ((get_clicked_mouseY() > 135 || get_clicked_mouseY() < 65))){
-                                MakananIkan newmakananikan(get_clicked_mouseX(), get_clicked_mouseY());
-                                listofmakananikan.add(newmakananikan);
-                                habibi.setKoin(habibi.getKoin() - 5);
+                            if (((get_clicked_mouseX() > 753 || get_clicked_mouseX() < 683)) || ((get_clicked_mouseY() > 135 || get_clicked_mouseY() < 65))){
+                                if (habibi.getKoin() < 5) {
+                                    kurangkoin = true;
+                                } else {
+                                    MakananIkan newmakananikan(get_clicked_mouseX(), get_clicked_mouseY()+100);
+                                    arkavkuarium.tambahmakananikan(newmakananikan);
+                                    habibi.kurangkanKoin(5);   
+                                    kurangkoin = false;
+                                }
                             }
                         }
                         if (!menang){
                             if ((get_clicked_mouseX() <= 753 && get_clicked_mouseX() >= 683) && (get_clicked_mouseY() <= 135 && get_clicked_mouseY() >= 65)) {
-                                habibi.tambahTelur();
-                                if (habibi.getBanyakTelur()==3){
-                                menang=true;
+                                if (habibi.getKoin() < 500) {
+                                    kurangkoin = true;
+                                } else {
+                                    habibi.kurangkanKoin(500);
+                                    habibi.tambahTelur();
+                                    if (habibi.getBanyakTelur()==3){
+                                        menang=true;
+                                    }
+                                    kurangkoin = false;
+                                }
                             }
                         }
                         get_clicked_mouse().erase(1);
-                        break;
-                        }
-                        get_clicked_mouse().erase(1);
-                        
                         break;
                     }
                 }
@@ -166,99 +258,85 @@ int main( int argc, char* args[] )
                     case SDLK_x: {
                         running = false;
                         break;
-                    }    
-                    case SDLK_m: {
-                        MakananIkan newmakananikan(rand()%SCREEN_WIDTH, 0);
-                        listofmakananikan.add(newmakananikan);
-                        habibi.kurangkanKoin(5);
-                        break;
                     }
                     case SDLK_g: {
-                        Ikan* newguppy = new Guppy(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 2000);
-                        listofikan.add(newguppy);
-                        habibi.kurangkanKoin(100);
-                        break;
+                        if (habibi.getKoin() < 100) {
+                            kurangkoin = true;
+                        } else {
+                            Ikan* newguppy = new Guppy(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 2000);
+                            arkavkuarium.tambahikan(newguppy);
+                            habibi.kurangkanKoin(100);
+                            kurangkoin = false;
+                            break; 
+                        }
                     }
                     case SDLK_p: {
-                        Ikan* newpiranha = new Piranha(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 4000);
-                        listofikan.add(newpiranha);
-                        habibi.kurangkanKoin(200);
-                        break;
-                    }
-                    case SDLK_t: {
-                        habibi.kurangkanKoin(100);
-                        habibi.tambahTelur();
-                        if (habibi.getBanyakTelur()==3){
-                            menang=true;
-                        }
-                        break;
-                    }
-                }
-            }
-
-
-            int dapatkoin = siput.cariKoin(listofkoin);
-            
-            if (dapatkoin != -1) {
-                listofkoin.removeIdx(dapatkoin);
-            }
-
-
-            loop = 0;
-            while(loop < listofikan.getSize()) {
-                if (listofikan.get(loop)->getType() == "Guppy") {
-                    if (listofikan.get(loop)->mati()) {
-                        listofikan.removeIdx(loop);
-                        continue;
-                    }  
-                    if (listofikan.get(loop)->getLapar()) {
-                        int makanandimakan = listofikan.get(loop)->cariMakanGuppy(listofmakananikan);
-                        if (makanandimakan != -1) {
-                            listofmakananikan.removeIdx(makanandimakan);
-                        }
-                    } else {
-                        listofikan.get(loop)->gerak();
-                    }
-                    if (listofikan.get(loop)->keluarkanKoinGuppy()) {
-                        if (listofikan.get(loop)->getLevel() == 1) {
-                            Koin newkoin(listofikan.get(loop)->getX(), listofikan.get(loop)->getY(), 10, 10, 1);
-                            listofkoin.add(newkoin);
-                        } else if (listofikan.get(loop)->getLevel() == 2) {
-                            Koin newkoin(listofikan.get(loop)->getX(), listofikan.get(loop)->getY(), 10, 20, 2);
-                            listofkoin.add(newkoin);
+                        if (habibi.getKoin() < 200) {
+                            kurangkoin = true;
                         } else {
-                            Koin newkoin(listofikan.get(loop)->getX(), listofikan.get(loop)->getY(), 10, 50, 3);
-                            listofkoin.add(newkoin);
-                        }
-                    }              
-                } else {
-                    if (listofikan.get(loop)->mati()) {
-                        listofikan.removeIdx(loop);
-                        continue;
+                            Ikan* newpiranha = new Piranha(rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, 0, 4000);
+                            arkavkuarium.tambahikan(newpiranha);
+                            habibi.kurangkanKoin(200);
+                            kurangkoin = false;
+                            break;    
+                        } 
                     }
-                    if (listofikan.get(loop)->getLapar()) {
-                        int ikandimakan = listofikan.get(loop)->cariIkanTerdekat(listofikan);
-                        if (ikandimakan != -1) {
-                            Koin newkoin(listofikan.get(loop)->getX(), listofikan.get(loop)->getY(), 10, 100*(listofikan.get(ikandimakan)->getLevel()+1), 4);
-                            listofkoin.add(newkoin);
-                            listofikan.removeIdx(ikandimakan);
+                    case SDLK_s: {
+                        ofstream fileikan;
+                        fileikan.open("Ikan.txt");
+
+                        for(int i = 0; i < arkavkuarium.getListIkan().getSize(); i++) {
+                            fileikan << ikani->getX() <<  " " << ikani->getY();
+                            fileikan << " " << ikani->getLapar() << " " << ikani->getWaktuMakan() - time_since_start() << " " << ikani->getType() << " " << ikani->getPointTujuan().getX() << " " << ikani->getPointTujuan().getY() << " " << ikani->getImage() <<  " " << ikani->getWaktuRandom() - time_since_start();
+                            if (ikani->getType() == "Guppy") {
+                                fileikan << " " << ikani->getWaktuKoin() - time_since_start() << " " << ikani->getLevel() << " " << ikani->getJumlahMakanYangDimakan() << "\n"; 
+                            } else {
+                                fileikan << "\n";
+                            }
                         }
-                    } else {
-                        listofikan.get(loop)->gerak();
+
+                        ofstream filemakananikan;
+                        filemakananikan.open("MakananIkan.txt");
+
+                        for(int i = 0; i < arkavkuarium.getListMakananIkan().getSize(); i++) {
+                            filemakananikan << mki->getX() << " " << mki->getY();
+                            filemakananikan << " " << mki->getImage() << "\n";
+                        }
+
+                        ofstream filekoin;
+                        filekoin.open("Koin.txt");
+
+                        for(int i = 0; i < arkavkuarium.getListKoin().getSize(); i++) {
+                            filekoin << koini->getX() << " " << koini->getY() << " " << koini->getKecepatan();
+                            filekoin << " " << koini->getNilai() << " " << koini->getLevel() << " " << koini->getImage() << "\n";
+                        }
+
+                        ofstream filesiput;
+                        filesiput.open("Siput.txt");
+
+                        filesiput << siputs.getX() << " " << siputs.getY() << " " << siputs.getPointTujuan().getX() << " " << siputs.getPointTujuan().getY() << " " << arkavkuarium.getSiput().getImage() << "\n";
+
+                        ofstream fileplayer;
+                        fileplayer.open("Player.txt");
+
+                        fileplayer << habibi.getJumlahKoin() << " " << habibi.getBanyakTelur() << "\n";
+
+                        fileplayer.close();
+                        filesiput.close();
+                        filekoin.close();
+                        filemakananikan.close();
+                        fileikan.close();
+                        break;
                     }
                 }
-                loop++;
             }
 
-            for(int i = 0; i < listofmakananikan.getSize(); i++) {
-                listofmakananikan.getRef(i)->gerak();
-                if (abs(listofmakananikan.get(i).getY() - SCREEN_HEIGHT) < 0.1) {
-                    listofmakananikan.removeIdx(i);
+            arkavkuarium.gerak();
+
+            if (arkavkuarium.getListIkan().getSize() == 0) {
+                if (habibi.getKoin() < 100) {
+                    kalah = true;
                 }
-            }
-
-            for(int i = 0; i < listofkoin.getSize(); i++) {
-                listofkoin.getRef(i)->gerak();
             }
 
             // Update FPS setiap detik
@@ -274,33 +352,9 @@ int main( int argc, char* args[] )
 
             // Gambar ikan di posisi yang tepat.
             clear_screen();
-            draw_image("Aquarium6.jpg", SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-            draw_text("Panah untuk bergerak, r untuk reset, x untuk keluar", 18, 10, 10, 0, 0, 0);
-            draw_text(fps_text, 18, 10, 30, 0, 0, 0);
+            
+            arkavkuarium.gambarAkuarium(habibi, kurangkoin);
 
-            for(int i = 0; i < listofikan.getSize(); i++) {
-                draw_image(listofikan.get(i)->getImage(), listofikan.get(i)->getX(), listofikan.get(i)->getY()-24);
-            }
-
-            for(int i = 0; i < listofmakananikan.getSize(); i++) {
-                draw_image(listofmakananikan.getRef(i)->getImage(), listofmakananikan.get(i).getX(), listofmakananikan.get(i).getY()-24);
-            }
-
-            for(int i = 0; i < listofkoin.getSize(); i++) {
-                draw_image(listofkoin.getRef(i)->getImage(), listofkoin.get(i).getX(), listofkoin.get(i).getY()-24);
-            }
-            if (habibi.getBanyakTelur()==0){
-                draw_image("telor1.png",718,100);
-            }else if (habibi.getBanyakTelur()==1){
-                draw_image("telor2.png",718,100);
-            }else{
-                draw_image("telor3.png",718,100);
-            }
-
-            draw_image(siput.getImage(), siput.getX(), siput.getY()-24);
-
-            draw_text("Koin Player : " +  std::to_string(habibi.getKoin()), 18, 10, 50, 0, 0, 0);
-            draw_text("Banyak telur: " + std::to_string(habibi.getBanyakTelur()),18,10,100,0,0,0);
             update_screen();            
         }
 

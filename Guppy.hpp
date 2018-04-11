@@ -38,6 +38,7 @@ class Guppy : public Ikan {
         //setter
         void setLevel(int); //Untuk mengubah nilai level dari guppy
         void setJumlahMakanYangDimakan(int); //Untuk mengbuah nilai jumlah makan yang sudah dimakan guppy
+        void setWaktuKoin(double);
 
     	//method
         bool keluarkanKoinGuppy();

@@ -18,9 +18,6 @@ class Piranha : public Ikan {
 		//cctor mengkopi piranha
 		Piranha(const Piranha&);
 		
-		//dtor mengubah jumlah piranha
-		//~Piranha();
-		
 		//operator overloading =
 		Piranha& operator=(const Piranha&);
 		
@@ -31,8 +28,8 @@ class Piranha : public Ikan {
 		//dan mengembalikkan posisi makanan yang bisa dimakan terdekat
 		//jika tidak ada makanan di radius akan mengembalikkan (-1, -1)
 		int cariIkanTerdekat(List<Ikan*>&);
-		//Fungsi yang mengembalikkan
 		
+		//Fungsi yang mengembalikkan
 		void makan(List<Ikan>&, Ikan&);
 };
 

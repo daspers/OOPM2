@@ -6,6 +6,15 @@
 #include <SDL2/SDL_ttf.h>
 #include <set>
 #include <string>
+#include <vector>
+
+#include <map>
+#include <iostream>
+#include <chrono>
+#include <fstream>
+#include <string>
+
+using namespace std::chrono;
 
 #define PI 3.14159265
 
@@ -18,6 +27,9 @@ const char* const FONT_NAME = "OpenSans-Regular.ttf";
 
 // ---------------------------------- SETUP ----------------------------------
 
+void setStart(high_resolution_clock::time_point x);
+high_resolution_clock::time_point& getStart();
+void setWaktuAkhir(double);
 // Melakukan inisialisasi terhadap program.
 bool init();
 
@@ -30,6 +42,8 @@ void close();
 // titik (x, y).
 // Perubahan di layar baru muncul ketika update_screen() dipanggil.
 void draw_image(std::string filename, int x, int y);
+
+double tulis_waktu();
 
 // Menuliskan teks berukuran font_size berwarna (r, g, b) ke layar sehingga
 // kiri atas teks berada di titik (x, y).
@@ -73,6 +87,5 @@ double time_since_start();
 std::set<int>& get_clicked_mouse();
 const double get_clicked_mouseX();
 const double get_clicked_mouseY();
-
 
 #endif

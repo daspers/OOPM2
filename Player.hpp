@@ -29,5 +29,7 @@ class Player {
         int getKoin() const;
 
         void setKoin(int x);
+
+        void setBanyakTelur(int x);
 };
 #endif

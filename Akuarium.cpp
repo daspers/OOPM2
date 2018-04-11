@@ -43,7 +43,7 @@ List<Koin>& Akuarium::getListKoin(){
 	return koin;
 }
 
-Siput Akuarium::getSiput() const {
+Siput& Akuarium::getSiput(){
 	return siput;
 }
 
@@ -115,7 +115,7 @@ void Akuarium::gerak() {
 
     for(int i = 0; i < makananikan.getSize(); i++) {
         makananikan.getRef(i)->gerak();
-        if (abs(makananikan.get(i).getY() - SCREEN_HEIGHT) < 0.1) {
+        if (abs(makananikan.get(i).getY() - SCREEN_HEIGHT - 70) < 0.1) {
             makananikan.removeIdx(i);
         }
     }
@@ -127,19 +127,19 @@ void Akuarium::gerak() {
     
 }
 
-void Akuarium::gambarAkuarium(Player habibi) {
+void Akuarium::gambarAkuarium(Player habibi, bool kurangkoin) {
 	draw_image("Aquarium6.jpg", SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
             draw_text("Panah untuk bergerak, r untuk reset, x untuk keluar", 18, 10, 10, 0, 0, 0);
 	for(int i = 0; i < ikan.getSize(); i++) {
-        draw_image(ikan.get(i)->getImage(), ikan.get(i)->getX(), ikan.get(i)->getY()-24);
+        draw_image(ikan.get(i)->getImage(), ikan.get(i)->getX(), ikan.get(i)->getY()-100);
     }
 
     for(int i = 0; i < makananikan.getSize(); i++) {
-        draw_image(makananikan.getRef(i)->getImage(), makananikan.get(i).getX(), makananikan.get(i).getY()-24);
+        draw_image(makananikan.getRef(i)->getImage(), makananikan.get(i).getX(), makananikan.get(i).getY()-100);
     }
 
     for(int i = 0; i < koin.getSize(); i++) {
-        draw_image(koin.getRef(i)->getImage(), koin.get(i).getX(), koin.get(i).getY()-24);
+        draw_image(koin.getRef(i)->getImage(), koin.get(i).getX(), koin.get(i).getY()-100);
     }
 
     if (habibi.getBanyakTelur()==0){
@@ -149,7 +149,17 @@ void Akuarium::gambarAkuarium(Player habibi) {
     }else{
         draw_image("telor3.png",718,100);
     }
-    draw_image(siput.getImage(), siput.getX(), siput.getY()-24);
-	draw_text("Koin Player : " +  std::to_string(habibi.getKoin()), 18, 10, 50, 0, 0, 0);
+    draw_image(siput.getImage(), siput.getX(), siput.getY()-100);
+	if (kurangkoin) {
+        draw_text("Koin Player : " +  std::to_string(habibi.getKoin()), 18, 10, 50, 255, 0, 0);
+    } else {
+        draw_text("Koin Player : " +  std::to_string(habibi.getKoin()), 18, 10, 50, 0, 0, 0);
+    }
     draw_text("Banyak telur: " + std::to_string(habibi.getBanyakTelur()),18,10,100,0,0,0);
 }
+// //prosedur untuk mengupdate isi dari aquarium
+// void Akuarium::updateIsi();
+// //prosedur untuk menggambarkan petak akuarium
+// void Akuarium::gambarAkuarium();
+// //prosedur untuk memunculkan benda akuarium secara random
+// void Akuarium::spawnItem();

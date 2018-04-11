@@ -32,6 +32,10 @@ void Player::setKoin(int x) {
 	jumlahkoin = x;
 }
 
+void Player::setBanyakTelur(int x) {
+	banyaktelur = x;
+}
+
 //Mengembalikan banyak telur dari pemain
 int Player::getBanyakTelur() const{
 	return banyaktelur;

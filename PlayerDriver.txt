@@ -1,0 +1,3 @@
+Jumlah Koin Harry: 10000, Jumlah Telur Harry: 2
+Jumlah Koin Habibi: 10200, Jumlah Telur Habibi: 1
+Jumlah Koin Tony: 1000, Jumlah Telur Tony: 3
